@@ -17,6 +17,14 @@ class GameManage{
     }
 
     public Init():void{
-        //初始化数据
+        this.register(GameEvent.LAUNCH,this.onLaunchHandler,this);
+    }
+
+    protected register( type:string,callback:Function,target:any ):void{
+        GameResponse.GetInstance().addEventListener(type,callback,target);
+    }
+
+    private onLaunchHandler(e:GameEvent):void{
+        Core.UILayer.Show(LaunchSkin);
     }
 }

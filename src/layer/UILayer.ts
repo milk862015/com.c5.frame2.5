@@ -7,6 +7,11 @@ class  UILayer extends eui.Group{
     private curShow:egret.DisplayObjectContainer;
     private lastShow:egret.DisplayObjectContainer;
 
+    private loadView:any;
+
+    private readyClassFactory:any;
+    private readyMode:number;
+
     private curClass:any;
     constructor(){
         super();
@@ -16,11 +21,42 @@ class  UILayer extends eui.Group{
     private initialize():void{
     }
 
+    public SetLoadView(value:any):void{
+        this.loadView = value;
+    }
+
+
     public Show(classFactory:any,mode?:number):void{
         if( mode === void 0 ){mode = 1}
         if( this.curClass == classFactory ){
             return;
         }
+
+        //检查资源是否加载了
+        var className:string =  classFactory["__class__"];
+        if( typeof className != "string"){
+            return;
+        }
+
+        if( window["skins"][className] == void 0){
+            GameResponse.GetInstance().addEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
+            this.readyClassFactory = classFactory;
+            this.readyMode = mode;
+            LoadManage.GetInstance().StartLoad([className],this.loadView);
+        }else{
+            this.startShow(classFactory,mode);
+        }
+    }
+
+    private onUILoadCompleteHandler(e:GameEvent):void{
+        GameResponse.GetInstance().removeEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
+        this.startShow(this.readyClassFactory,this.readyMode);
+        this.readyClassFactory = null;
+        this.readyMode = null;
+    }
+
+
+    private startShow(classFactory:any,mode:number):void{
         if( this.curShow ){
             this.lastShow = this.curShow;
         }

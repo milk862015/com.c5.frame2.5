@@ -53,6 +53,8 @@ declare module egret {
      */
     function registerClass(classDefinition: any, className: string, interfaceNames?: string[]): void;
 }
+declare function __extends(d: any, b: any): void;
+declare var __define: any;
 declare module egret {
     /**
      * @language en_US
@@ -73,12 +75,14 @@ declare module egret {
          * a unique identification number assigned to this instance.
          * @version Egret 2.4
          * @platform Web,Native
+         * @readOnly
          */
         /**
          * @language zh_CN
          * 返回此对象唯一的哈希值,用于唯一确定一个对象。hashCode为大于等于1的整数。
          * @version Egret 2.4
          * @platform Web,Native
+         * @readOnly
          */
         hashCode: number;
     }
@@ -4993,6 +4997,7 @@ declare module egret {
      */
     class RenderTexture extends egret.Texture {
         protected context: any;
+        private rootDisplayList;
         constructor();
         /**
          * @language en_US
@@ -5014,10 +5019,11 @@ declare module egret {
          */
         drawToTexture(displayObject: egret.DisplayObject, clipBounds?: Rectangle, scale?: number): boolean;
         private $update(displayObject);
-        protected drawDisplayObject(displayObject: DisplayObject, context: sys.RenderContext): number;
+        protected drawDisplayObject(displayObject: DisplayObject, context: sys.RenderContext, rootMatrix?: Matrix): number;
         private drawWithClip(displayObject, context);
         private drawWithScrollRect(displayObject, context);
         private createRenderContext(width, height);
+        dispose(): void;
     }
 }
 declare module egret {
@@ -9096,12 +9102,14 @@ declare module egret {
         /**
          * @language en_US
          * Should play the video in fullscreen mode (default = true).
+         * Currently only supports full-screen mobile terminal web.
          * @version Egret 2.4
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 是否全屏播放这个视频（默认值是 true）。
+         * 目前移动端 web 只支持全屏。
          * @version Egret 2.4
          * @platform Web,Native
          */
@@ -9162,6 +9170,21 @@ declare module egret {
          * @platform Web,Native
          */
         bitmapData: BitmapData;
+        /**
+         * @language en_US
+         * Whether current video is paused.
+         * @version Egret 2.4
+         * @platform Web,Native
+         * @readOnly
+         */
+        /**
+         * @language zh_CN
+         * 当前视频是否在暂停状态。
+         * @version Egret 2.4
+         * @platform Web,Native
+         * @readOnly
+         */
+        paused: boolean;
     }
     /**
      * @copy egret.Video
@@ -9200,6 +9223,7 @@ declare module egret_native {
     function pauseApp(): void;
     function resumeApp(): void;
     function readXML(filepath: string): any;
+    function xmlStr2JsonStr(text: string): any;
     function isFileExists(filepath: string): boolean;
     function isRecordExists(filepath: string): boolean;
     function readFileSync(filepath: string): any;
@@ -9219,9 +9243,9 @@ declare module egret_native {
         function preloadBackgroundMusic(path: string): void;
         function playBackgroundMusic(path: string, loop: boolean): void;
         function setBackgroundMusicVolume(value: number): void;
-        function setEffectVolume(value: number): void;
+        function setEffectsVolume(value: number): void;
         function getBackgroundMusicVolume(): number;
-        function getEffectVolume(): number;
+        function getEffectsVolume(): number;
         function stopBackgroundMusic(isRelease: boolean): void;
         function preloadEffect(path: string): void;
         function preloadEffectAsync(path: string, promise: egret.PromiseObject): void;
@@ -14202,7 +14226,6 @@ declare module egret {
      */
     function $callAsync(method: Function, thisObject: any, ...args: any[]): void;
 }
-declare function __extends(d: any, b: any): void;
 declare module egret {
     /**
      * @language en_US
@@ -14212,7 +14235,7 @@ declare module egret {
      * @param type Setter property names need to call
      * @param values Value passed to the parent class
      *
-     * @exmaple egret.superSetter(this, "alpha", 1);
+     * @exmaple egret.superSetter(egret.Sprite, this, "alpha", 1);
      */
     /**
      * @language zh_CN
@@ -14222,7 +14245,7 @@ declare module egret {
      * @param type 需要调用的setter属性名称
      * @param values 传给父类的值
      *
-     * @exmaple egret.superSetter(this, "alpha", 1);
+     * @exmaple egret.superSetter(egret.Sprite, this, "alpha", 1);
      */
     function superSetter(currentClass: any, thisObj: any, type: string, ...values: any[]): any;
     /**
@@ -14233,7 +14256,7 @@ declare module egret {
      * @param type Setter property names need to call
      * @returns {any} The value returned by the parent
      *
-     * @exmaple egret.superGetter(this, "alpha");
+     * @exmaple egret.superGetter(egret.Sprite, this, "alpha");
      */
     /**
      * @language zh_CN
@@ -14243,7 +14266,7 @@ declare module egret {
      * @param type 需要调用的setter属性名称
      * @returns {any} 父类返回的值
      *
-     * @exmaple egret.superGetter(this, "alpha");
+     * @exmaple egret.superGetter(egret.Sprite, this, "alpha");
      */
     function superGetter(currentClass: any, thisObj: any, type: string): any;
 }

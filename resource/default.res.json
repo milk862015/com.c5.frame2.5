@@ -1,4 +1,33 @@
 {
-	"groups":[],
-	"resources":[]
+	"groups":[
+	{
+		"keys":"loading_json,LoadViewSkin_exml",
+		"name":"loadRes"
+	},
+	{
+		"keys":"launchBg_jpg,btnStart_png",
+		"name":"LaunchSkin"
+	}],
+	"resources":[
+	{
+		"name":"loading_json",
+		"subkeys":"bgProgress_png,bg_black_png,jiaozi_png,progress_png",
+		"type":"sheet",
+		"url":"assets/loading.json"
+	},
+	{
+		"name":"LoadViewSkin_exml",
+		"type":"bin",
+		"url":"skins/LoadViewSkin.exml"
+	},
+	{
+		"name":"launchBg_jpg",
+		"type":"image",
+		"url":"bg/launchBg.jpg"
+	},
+	{
+		"name":"btnStart_png",
+		"type":"image",
+		"url":"assets/btnStart.png"
+	}]
 }

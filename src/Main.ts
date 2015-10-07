@@ -26,7 +26,6 @@ class Main extends eui.UILayer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.onResourceLoadComplete,this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.onResourceProgress,this);
             this.createScene();
-
             GameResponse.GetInstance().addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
             LoadManage.GetInstance().Init();
             LoadManage.GetInstance().StartLoad(this.loadArr,LoadViewSkin);
@@ -35,6 +34,7 @@ class Main extends eui.UILayer {
 
     private onLoadCompleteHandler(e:GameEvent):void{
         GameResponse.GetInstance().removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+        GameResponse.GetInstance().Launch();
     }
 
     private createScene():void{
@@ -48,7 +48,9 @@ class Main extends eui.UILayer {
         this.addChild(Core.UILayer);
 
         Core.PopUpLayer = new PopUpLayer();
-        this.addChild(Core.GameLayer);
+        this.addChild(Core.PopUpLayer);
+
+        Core.UILayer.SetLoadView(LoadViewSkin);
     }
 }
 

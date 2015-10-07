@@ -34,4 +34,8 @@ class GameResponse extends egret.EventDispatcher{
         this.sendEvent(GameEvent.LOAD_COMPETE);
     }
 
+    public Launch():void{
+        this.sendEvent(GameEvent.LAUNCH);
+    }
+
 }

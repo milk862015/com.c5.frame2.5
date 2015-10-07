@@ -41,18 +41,15 @@ class AssetAdapter implements eui.IAssetAdapter{
      * @param oldContent any 旧的内容对象,传入值有可能为null。
      * 对于某些类型素材，例如MovieClip，可以重用传入的显示对象,只修改其数据再返回。
      */
-    public getAsset(source:any,compFunc:Function,thisObject:any,oldContent:any):void{
+    getAsset(source: string, callBack: (content: any, source: string) => void, thisObject: any): void{
 
         function onGetRes(data:any):void{
-            compFunc.call(thisObject,data,source);
+            callBack.call(thisObject,data,source);
         }
 
         var content:any = source;
-        if(source.prototype){
-            content = new source();
-        }
         if(content instanceof egret.DisplayObject||content instanceof egret.Texture){
-            compFunc.call(thisObject,content,source);
+            callBack.call(thisObject,content,source);
         }
         else if(typeof(source)=="string"){
             if(RES.hasRes(source)){
@@ -65,7 +62,7 @@ class AssetAdapter implements eui.IAssetAdapter{
 
         }
         else{
-            compFunc.call(thisObject,content,source);
+            callBack.call(thisObject,content,source);
         }
     }
 

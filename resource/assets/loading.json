@@ -1,0 +1,5 @@
+{"file":"loading.png","frames":{
+"bg_black_png":{"x":489,"y":1,"w":5,"h":5,"offX":0,"offY":0,"sourceW":5,"sourceH":5},
+"bgProgress_png":{"x":1,"y":1,"w":408,"h":14,"offX":0,"offY":0,"sourceW":408,"sourceH":14},
+"jiaozi_png":{"x":411,"y":1,"w":58,"h":47,"offX":7,"offY":14,"sourceW":72,"sourceH":72},
+"progress_png":{"x":471,"y":1,"w":16,"h":14,"offX":0,"offY":0,"sourceW":16,"sourceH":14}}}

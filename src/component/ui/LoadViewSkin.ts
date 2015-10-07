@@ -1,22 +1,12 @@
 /**
  * Created by Administrator on 2015/9/28.
  */
-class LoadViewSkin extends eui.Panel{
-    static SKIN_NAME:string = "skins.LoadViewSkin";
+class LoadViewSkin extends SkinPanel{
     private loadProgress:eui.Label;
     constructor(){
         super();
-        this.skinName = LoadViewSkin.SKIN_NAME;
-        this.addEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStageHandler,this);
     }
 
-    private onAddToStageHandler( e:egret.Event ):void{
-        this.initialize();
-        this.removeEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStageHandler,this);
-
-        this.addEventListener(egret.Event.REMOVED_FROM_STAGE,this.onRemoveFromStage,this);
-        GameResponse.GetInstance().addEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
-    }
 
     private onProgressHandler(e:GameEvent):void{
         var data:any = e.data;
@@ -37,12 +27,12 @@ class LoadViewSkin extends eui.Panel{
         this.loadProgress.text = value.toString() + "%";
     }
 
-    private initialize():void{
-
+    public initialize():void{
+        this.registerListener(GameResponse.GetInstance(),GameEvent.LOAD_COMPETE,this.onProgressHandler,this);
+        //this.setProgress(0);
     }
 
-    private onRemoveFromStage( e:egret.Event ):void{
-        this.removeEventListener(egret.Event.REMOVED_FROM_STAGE,this.onRemoveFromStage,this);
-        GameResponse.GetInstance().removeEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+    public remove():void{
+
     }
 }

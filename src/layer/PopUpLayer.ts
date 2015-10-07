@@ -12,10 +12,10 @@ class PopUpLayer extends eui.Group{
     }
 
     public addPopUp(value:egret.DisplayObjectContainer):void{
-
+        this.addChild(value);
     }
 
     public removePopUp(value:egret.DisplayObjectContainer ):void{
-
+        this.removeChild(value);
     }
 }
