@@ -33,7 +33,7 @@ class  UILayer extends eui.Group{
         }
 
         //检查资源是否加载了
-        var className:string =  classFactory["__class__"];
+        var className:string =  classFactory["name"];
         if( typeof className != "string"){
             return;
         }

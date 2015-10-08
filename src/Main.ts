@@ -5,7 +5,9 @@ class Main extends eui.UILayer {
         this.stage.registerImplementation("eui.IAssetAdapter",new AssetAdapter());
 
         super.createChildren();
-        var theme = new eui.Theme("resource/default.thm.json", this.stage);
+        //var theme = new eui.Theme("resource/default.thm.json", this.stage);
+        RES.registerAnalyzer("exml",EXMLAnalyzer);
+        //RES.registerAnalyzer("xml",RES.XMLAnalyzer);
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE,this.onConfigComplete,this);
         RES.loadConfig("resource/default.res.json","resource/")
     }
@@ -34,7 +36,7 @@ class Main extends eui.UILayer {
 
     private onLoadCompleteHandler(e:GameEvent):void{
         GameResponse.GetInstance().removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
-        GameResponse.GetInstance().Launch();
+        //GameResponse.GetInstance().Launch();
     }
 
     private createScene():void{
@@ -51,6 +53,8 @@ class Main extends eui.UILayer {
         this.addChild(Core.PopUpLayer);
 
         Core.UILayer.SetLoadView(LoadViewSkin);
+
+        GameManage.GetInstance().Init();
     }
 }
 
