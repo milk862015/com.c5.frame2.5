@@ -19,7 +19,13 @@
       "name": "res"
     },
     {
+      "name":"game"
+    },
+    {
       "name":"socket"
+    },
+    {
+      "name":"dragonbones"
     }
   ]
 }
