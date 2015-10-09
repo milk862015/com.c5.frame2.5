@@ -6,6 +6,7 @@ var game_file_list = [
 	"libs/modules/egret/egret.native.js",
 	"libs/modules/eui/eui.js",
 	"libs/modules/res/res.js",
+	"libs/modules/socket/socket.js",
 	"bin-debug/AssetAdapter.js",
 	"bin-debug/EXMLAnalyzer.js",
 	"bin-debug/Main.js",
@@ -19,6 +20,7 @@ var game_file_list = [
 	"bin-debug/layer/UILayer.js",
 	"bin-debug/manage/GameManage.js",
 	"bin-debug/manage/LoadManage.js",
+	"bin-debug/net/WSNet.js",
 	"bin-debug/port/DataPort.js",
 	"bin-debug/response/GameResponse.js",
 	//----auto game_file_list end----
