@@ -27,6 +27,7 @@ var game_file_list = [
 	"bin-debug/net/WSNet.js",
 	"bin-debug/port/DataPort.js",
 	"bin-debug/response/GameResponse.js",
+	"bin-debug/ThemeAdapter.js",
 	//----auto game_file_list end----
 ];
 

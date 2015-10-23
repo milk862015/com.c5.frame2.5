@@ -42,7 +42,6 @@ class Main extends eui.UILayer {
     private createScene():void{
         //初始化层
         Core.Stage = this.stage;
-
         Core.GameLayer = new GameLayer();
         this.addChild(Core.GameLayer);
 
