@@ -33,7 +33,7 @@ class  UILayer extends eui.Group{
         }
 
         //检查资源是否加载了
-        var className:string =  classFactory["name"];
+        var className:string =  egret.getQualifiedClassName(classFactory);
         if( typeof className != "string"){
             return;
         }
