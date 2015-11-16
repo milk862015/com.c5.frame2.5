@@ -45,26 +45,4 @@ class Func {
         }
         return src;
     }
-
-    static DrawImage( x:number,y:number,w:number,h:number ):string{
-        try{
-            var canvas:any = document.getElementById(egret.StageDelegate.canvas_name);
-            var ctx = canvas.getContext("2d");
-            var data = ctx.getImageData(x, y, w, h);
-            var newCan = document.createElement("canvas");
-            newCan.width = w;
-            newCan.height = h;
-            ctx = newCan.getContext("2d");
-            ctx.putImageData(data, 0, 0, 0, 0, w, h);
-            var b64 = newCan.toDataURL("image/jpeg",0.5);
-            return b64;
-        }catch(e){
-            alert(e);
-            return "";
-        }
-    }
-
-    static GetAllPicPath(value:string):string{
-        return SGame.imgUrlPrefix + value;
-    }
 }

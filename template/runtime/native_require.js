@@ -17,7 +17,9 @@ var game_file_list = [
 	"bin-debug/component/ui/LoadViewSkin.js",
 	"bin-debug/event/GameEvent.js",
 	"bin-debug/EXMLAnalyzer.js",
+	"bin-debug/func/func.js",
 	"bin-debug/global/Core.js",
+	"bin-debug/global/GameData.js",
 	"bin-debug/layer/GameLayer.js",
 	"bin-debug/layer/MusicLayer.js",
 	"bin-debug/layer/PopUpLayer.js",
@@ -30,6 +32,7 @@ var game_file_list = [
 	"bin-debug/port/DataPort.js",
 	"bin-debug/response/GameResponse.js",
 	"bin-debug/ThemeAdapter.js",
+	"bin-debug/unit/PopUpUnit.js",
 	//----auto game_file_list end----
 ];
 
