@@ -10,6 +10,7 @@ class SkinPanel extends eui.Panel{
             this.skinName = path;
             //this.skinName = EXML.parse()
         }
+        this.initialize();
         this.addEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStageHandler,this);
     }
 
@@ -37,14 +38,21 @@ class SkinPanel extends eui.Panel{
     }
 
     public onAddToStageHandler(e:egret.Event):void{
-        this.initialize();
         this.removeEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStageHandler,this);
 
         this.addEventListener(egret.Event.REMOVED_FROM_STAGE,this.onRemoveFromStageHandler,this);
+        this.onAdd();
+    }
+
+    protected onAdd():void{
+
+    }
+
+    protected onRemove():void{
+
     }
 
     public onRemoveFromStageHandler( e:egret.Event ):void{
-        this.remove();
         var count:number = this.listenerLst.length;
         for( var i:number=0;i<count;i++ ){
             var ld:ListenerData = this.listenerLst[i];
@@ -52,13 +60,11 @@ class SkinPanel extends eui.Panel{
         }
 
         this.removeEventListener(egret.Event.REMOVED_FROM_STAGE,this.onRemoveFromStageHandler,this);
+        this.onRemove();
     }
 
     public initialize():void{
 
     }
 
-    public remove():void{
-
-    }
 }

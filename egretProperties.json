@@ -7,7 +7,7 @@
 		"native": 1,
 		"path": "bin-release"
 	},
-	"egret_version": "2.5.2",
+	"egret_version": "2.5.5",
 	"modules": [
 		{
 			"name": "egret"
@@ -26,6 +26,9 @@
 		},
 		{
 			"name": "dragonbones"
+		},
+		{
+			"name": "tween"
 		}
 	]
 }

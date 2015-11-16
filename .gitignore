@@ -1,4 +1,4 @@
 bin-debug
+bin-release
 .idea
 libs
-template

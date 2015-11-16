@@ -7,6 +7,11 @@ class LoadViewSkin extends SkinPanel{
         super();
     }
 
+    protected onAdd():void{
+        this.setProgress(0);
+        this.registerListener(GameResponse.GetInstance(),GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+    }
+
 
     private onProgressHandler(e:GameEvent):void{
         var data:any = e.data;
@@ -28,8 +33,7 @@ class LoadViewSkin extends SkinPanel{
     }
 
     public initialize():void{
-        this.registerListener(GameResponse.GetInstance(),GameEvent.LOAD_COMPETE,this.onProgressHandler,this);
-        //this.setProgress(0);
+
     }
 
     public remove():void{

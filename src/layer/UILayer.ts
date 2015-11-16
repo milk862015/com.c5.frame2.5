@@ -33,7 +33,7 @@ class  UILayer extends eui.Group{
         }
 
         //检查资源是否加载了
-        var className:string =  classFactory["name"];
+        var className:string = egret.getQualifiedClassName(classFactory);
         if( typeof className != "string"){
             return;
         }
@@ -65,12 +65,14 @@ class  UILayer extends eui.Group{
             this.curShow = new classFactory();
         }
 
-        if( this.curShow ){
+
+        if( this.curShow ){//判断加载在哪层
             switch(mode){
                 case 1:
+                case 2:
                     this.addChild(this.curShow);
                     break;
-                default:
+                case 3:
                     this.addChildAt(this.curShow,this.numChildren - 1);
                     break;
             }
@@ -79,16 +81,32 @@ class  UILayer extends eui.Group{
         if( this.lastShow ){
             switch(mode){
                 case 1:
+                    this.curShow.alpha = 0;
+                    egret.Tween.get(this.curShow).to({alpha:1},UILayer.CHANGE_TIME).call(this.Close,this).call(GameResponse.GetInstance().EffectEnd,GameResponse.GetInstance());
+                    egret.Tween.get(this.lastShow).to({alpha:0},UILayer.CHANGE_TIME);
+                    break;
+                case 2:
+                    this.curShow.y = Core.Stage.height;
+                    egret.Tween.get(this.curShow).to({y:0},UILayer.CHANGE_TIME).call(this.Close,this).call(GameResponse.GetInstance().EffectEnd,GameResponse.GetInstance());
+                    break;
+                case 3:
+                    egret.Tween.get(this.lastShow).to({y:Core.Stage.height},UILayer.CHANGE_TIME).call(this.Close,this).call(GameResponse.GetInstance().EffectEnd,GameResponse.GetInstance());
                     break;
                 default :
+                    this.Close();
                     break;
             }
         }else{
             this.Close();
+            GameResponse.GetInstance().EffectEnd();
         }
     }
 
     private Close():void{
-        
+        if(this.lastShow  && this.lastShow.parent){
+            this.lastShow.parent.removeChild(this.lastShow);
+            this.lastShow = null;
+        }
     }
+
 }

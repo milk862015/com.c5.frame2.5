@@ -38,4 +38,8 @@ class GameResponse extends egret.EventDispatcher{
         this.sendEvent(GameEvent.LAUNCH);
     }
 
+    public EffectEnd():void{
+        this.sendEvent(GameEvent.EFFECT_END);
+    }
+
 }

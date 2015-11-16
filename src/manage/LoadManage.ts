@@ -30,9 +30,7 @@ class LoadManage{
     public StartLoad(arr:string[],classView:any):void{
         if( classView ){
             this._loadArr = arr;
-            this._view = new classView();
-            Core.PopUpLayer.addPopUp(<egret.DisplayObjectContainer>this._view);
-
+            this._view = Core.PopUpLayer.AddPopUp(classView,false);
             this._totalLoad = this.getTotalNeedLoad(this._loadArr);
             this._curLoad = 0;
 
@@ -55,7 +53,7 @@ class LoadManage{
 
     private endLoad():void{
         if( this._view ){
-            Core.PopUpLayer.removePopUp(this._view);
+            Core.PopUpLayer.RemovePopUp(this._view,false);
             this._view = null;
             GameResponse.GetInstance().LoadComplete();
         }

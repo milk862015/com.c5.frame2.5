@@ -36,6 +36,7 @@ class Main extends eui.UILayer {
 
     private onLoadCompleteHandler(e:GameEvent):void{
         GameResponse.GetInstance().removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+
         //GameResponse.GetInstance().Launch();
     }
 
@@ -47,6 +48,9 @@ class Main extends eui.UILayer {
 
         Core.UILayer = new UILayer();
         this.addChild(Core.UILayer);
+
+        Core.MusicLayer = new MusicLayer();
+        this.addChild(Core.MusicLayer);
 
         Core.PopUpLayer = new PopUpLayer();
         this.addChild(Core.PopUpLayer);

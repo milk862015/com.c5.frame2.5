@@ -6,5 +6,4 @@ interface ListenerData{
     eventType:string;
     func:Function;
     target:any;
-
 }
