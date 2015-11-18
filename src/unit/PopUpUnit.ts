@@ -4,6 +4,7 @@
 class PopUpUnit extends egret.Sprite{
     private modalAlpha:number;
     private bg:egret.Bitmap;
+    private _child:egret.DisplayObject;
     constructor(alpha?:number){
         super();
         this.modalAlpha = alpha;
@@ -11,12 +12,7 @@ class PopUpUnit extends egret.Sprite{
     }
 
     private initialize():void{
-        //if( this.modalColor != void 0 && this.modalAlpha != void 0 ){
-        //    var g:egret.Graphics  = this.graphics;
-        //    g.beginFill(this.modalColor,this.modalAlpha);
-        //    g.drawRect(0,0,Core.Stage.width,Core.Stage.height);
-        //    g.endFill();
-        //}
+
         this.bg = new egret.Bitmap();
         this.bg.alpha = this.modalAlpha;
         this.bg.texture = RES.getRes("black_jpg");
@@ -24,5 +20,17 @@ class PopUpUnit extends egret.Sprite{
         this.bg.width = Core.Stage.stageWidth;
         this.bg.height = Core.Stage.stageHeight;
         this.addChild(this.bg);
+    }
+
+    public SetChild( value:egret.DisplayObject ):void{
+        if( this._child && this._child.parent ){
+            this._child.parent.removeChild(this._child);
+        }
+        this._child = value;
+        this.addChild(value);
+    }
+
+    public GetChild():egret.DisplayObject{
+        return this._child;
     }
 }
