@@ -3,10 +3,6 @@
 	{
 		"keys":"LoadViewSkin_exml",
 		"name":"loadRes"
-	},
-	{
-		"keys":"LaunchSkin_exml",
-		"name":"launchSkin"
 	}],
 	"resources":[
 	{

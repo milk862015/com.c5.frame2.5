@@ -68,6 +68,7 @@ class  UILayer extends eui.Group{
 
         if( this.curShow ){//判断加载在哪层
             switch(mode){
+                case 0:
                 case 1:
                 case 2:
                     this.addChild(this.curShow);
