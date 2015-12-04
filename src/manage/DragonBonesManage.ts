@@ -14,8 +14,7 @@ class DragonBonesManage{
 
     private initialize():void{
         this.dragonBonesFactory = new dragonBones.EgretFactory();
-
-        egret.Ticker.getInstance().register(
+        egret.startTick(
             function(frameTime:number){
                 dragonBones.WorldClock.clock.advanceTime(0.01)
             },this);
