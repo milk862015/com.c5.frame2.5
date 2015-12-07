@@ -9,7 +9,7 @@ class LoadViewSkin extends SkinPanel{
 
     protected onAdd():void{
         this.setProgress(0);
-        this.registerListener(GameResponse.GetInstance(),GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+        this.registerListener(gs,GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
     }
 
 

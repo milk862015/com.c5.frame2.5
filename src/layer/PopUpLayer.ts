@@ -41,9 +41,9 @@ class PopUpLayer extends eui.Group{
         if( effect ){
             target["scaleX"] = 0;
             target["scaleY"] = 0;
-            egret.Tween.get(target).to({scaleX:1,scaleY:1},300,egret.Ease.backOut).call(GameResponse.GetInstance().EffectEnd,GameResponse.GetInstance());
+            egret.Tween.get(target).to({scaleX:1,scaleY:1},300,egret.Ease.backOut).call(gs.EffectEnd,gs);
         }else{
-            GameResponse.GetInstance().EffectEnd();
+           gs.EffectEnd();
         }
         return target;
     }

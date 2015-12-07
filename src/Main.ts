@@ -28,16 +28,16 @@ class Main extends eui.UILayer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.onResourceLoadComplete,this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.onResourceProgress,this);
             this.createScene();
-            GameResponse.GetInstance().addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
-            LoadManage.GetInstance().Init();
-            LoadManage.GetInstance().StartLoad(this.loadArr,LoadViewSkin);
+            gs.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+            LoadManage.Initialize();
+            LoadManage.StartLoad(this.loadArr,LoadViewSkin);
         }
     }
 
     private onLoadCompleteHandler(e:GameEvent):void{
-        GameResponse.GetInstance().removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+        gs.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
 
-        //GameResponse.GetInstance().Launch();
+        //gs.Launch();
     }
 
     private createScene():void{
@@ -57,7 +57,7 @@ class Main extends eui.UILayer {
 
         Core.UILayer.SetLoadView(LoadViewSkin);
 
-        GameManage.GetInstance().Init();
+        GameManage.Initialize();
     }
 }
 

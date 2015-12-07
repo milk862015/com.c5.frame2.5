@@ -1,45 +1,44 @@
 /**
  * Created by Administrator on 2015/9/28.
  */
-class GameResponse extends egret.EventDispatcher{
-    static instance:GameResponse;
-    public constructor(){
-        super();
-        if( GameResponse.instance != null ){
-            throw new TypeError("GameResponse Singleton already constrocted")
-        }
-        GameResponse.instance = this;
+module gs {
+    export function addEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number):void{
+        instance.addEventListener(type, listener, thisObject, useCapture, priority);
     }
 
-    static GetInstance():GameResponse{
-        if(GameResponse.instance == null){
-            GameResponse.instance = new GameResponse()
-        }
-        return GameResponse.instance
+    export function removeEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean): void{
+        instance.removeEventListener(type, listener, thisObject, useCapture)
     }
 
-    private sendEvent(key:string,data?:any):void{
-        var ge:GameEvent = new GameEvent(key,false,false,data);
-        this.dispatchEvent(ge);
-    }
-
-    public LoadProgress(cur:number,total:number):void{
+    export function LoadProgress(cur:number,total:number):void{
         var data:any = {};
         data.cur = cur;
         data.total = total;
-        this.sendEvent(GameEvent.LOAD_PROGRESS,data);
+        instance.sendEvent(GameEvent.LOAD_PROGRESS,data);
     }
 
-    public LoadComplete():void{
-        this.sendEvent(GameEvent.LOAD_COMPETE);
+    export function LoadComplete():void{
+        instance.sendEvent(GameEvent.LOAD_COMPETE);
     }
 
-    public Launch():void{
-        this.sendEvent(GameEvent.LAUNCH);
+    export function Launch():void{
+        instance.sendEvent(GameEvent.LAUNCH);
     }
 
-    public EffectEnd():void{
-        this.sendEvent(GameEvent.EFFECT_END);
+    export function EffectEnd():void{
+        instance.sendEvent(GameEvent.EFFECT_END);
     }
 
+    class GameResponse extends egret.EventDispatcher{
+        constructor(){
+            super();
+        }
+
+        public sendEvent(key:string,data?:any):void{
+            var ge:GameEvent = new GameEvent(key,false,false,data);
+            this.dispatchEvent(ge);
+        }
+    }
+
+    var instance:GameResponse = new GameResponse();
 }

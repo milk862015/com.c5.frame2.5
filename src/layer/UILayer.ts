@@ -39,17 +39,17 @@ class  UILayer extends eui.Group{
         }
 
         if( window["skins"][className] == void 0){
-            GameResponse.GetInstance().addEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
+            gs.addEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
             this.readyClassFactory = classFactory;
             this.readyMode = mode;
-            LoadManage.GetInstance().StartLoad([className],this.loadView);
+            LoadManage.StartLoad([className],this.loadView);
         }else{
             this.startShow(classFactory,mode);
         }
     }
 
     private onUILoadCompleteHandler(e:GameEvent):void{
-        GameResponse.GetInstance().removeEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
+        gs.removeEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
         this.startShow(this.readyClassFactory,this.readyMode);
         this.readyClassFactory = null;
         this.readyMode = null;
@@ -83,15 +83,15 @@ class  UILayer extends eui.Group{
             switch(mode){
                 case 1:
                     this.curShow.alpha = 0;
-                    egret.Tween.get(this.curShow).to({alpha:1},UILayer.CHANGE_TIME).call(this.Close,this).call(GameResponse.GetInstance().EffectEnd,GameResponse.GetInstance());
+                    egret.Tween.get(this.curShow).to({alpha:1},UILayer.CHANGE_TIME).call(this.Close,this).call(gs.EffectEnd,gs);
                     egret.Tween.get(this.lastShow).to({alpha:0},UILayer.CHANGE_TIME);
                     break;
                 case 2:
                     this.curShow.y = Core.Stage.height;
-                    egret.Tween.get(this.curShow).to({y:0},UILayer.CHANGE_TIME).call(this.Close,this).call(GameResponse.GetInstance().EffectEnd,GameResponse.GetInstance());
+                    egret.Tween.get(this.curShow).to({y:0},UILayer.CHANGE_TIME).call(this.Close,this).call(gs.EffectEnd,gs);
                     break;
                 case 3:
-                    egret.Tween.get(this.lastShow).to({y:Core.Stage.height},UILayer.CHANGE_TIME).call(this.Close,this).call(GameResponse.GetInstance().EffectEnd,GameResponse.GetInstance());
+                    egret.Tween.get(this.lastShow).to({y:Core.Stage.height},UILayer.CHANGE_TIME).call(this.Close,this).call(gs.EffectEnd,gs);
                     break;
                 default :
                     this.Close();
@@ -99,7 +99,7 @@ class  UILayer extends eui.Group{
             }
         }else{
             this.Close();
-            GameResponse.GetInstance().EffectEnd();
+            gs.EffectEnd();
         }
     }
 

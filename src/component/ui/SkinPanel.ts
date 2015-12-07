@@ -14,7 +14,7 @@ class SkinPanel extends eui.Panel{
         this.addEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStageHandler,this);
     }
 
-    public registerListener(listenerTarget:egret.EventDispatcher,eventType:string,func:Function,target:any):void{
+    public registerListener(listenerTarget:any,eventType:string,func:Function,target:any):void{
         listenerTarget.addEventListener(eventType,func,target);
         var ld:ListenerData =<ListenerData>{};
         ld.listenerTarget = listenerTarget;
@@ -24,7 +24,7 @@ class SkinPanel extends eui.Panel{
         this.listenerLst.push(ld);
     }
 
-    public clearListener(listenerTarget:egret.EventDispatcher,eventType:string,func:Function,target:any ):void{
+    public clearListener(listenerTarget:any,eventType:string,func:Function,target:any ):void{
         listenerTarget.removeEventListener(eventType,func,target);
         var ld:ListenerData =<ListenerData>{};
         ld.listenerTarget = listenerTarget;
