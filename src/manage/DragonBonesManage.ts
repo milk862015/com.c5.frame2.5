@@ -49,7 +49,12 @@ module DragonBonesManage{
         }
 
         public RemoveArmature(armature:dragonBones.Armature):void{
-            dragonBones.WorldClock.clock.remove(armature);
+            if( armature ){
+                if( armature.display.parent != null ){
+                    armature.display.parent.removeChild(armature.display);
+                }
+                dragonBones.WorldClock.clock.remove(armature);
+            }
         }
     }
 
