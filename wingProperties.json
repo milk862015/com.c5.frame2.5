@@ -1,5 +1,5 @@
 {
-	"close":true,
+	"close":false,
 	"resourcePlugin":
 	{
 		"configs":[
@@ -10,7 +10,12 @@
 		"id":"org.egret-labs.resource",
 		"library":
 		{
-			"children":[]
+			"children":[
+			{
+				"isFolder":false,
+				"key":"black_jpg",
+				"name":"black_jpg"
+			}]
 		}
 	},
 	"theme":"resource/default.thm.json"

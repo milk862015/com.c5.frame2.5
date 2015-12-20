@@ -16,4 +16,6 @@ class Core {
 
     //弹窗层
     static PopUpLayer:PopUpLayer;
+
+    static LoadLayer:LoadLayer;
 }

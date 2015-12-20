@@ -55,6 +55,10 @@ class Main extends eui.UILayer {
         Core.PopUpLayer = new PopUpLayer();
         this.addChild(Core.PopUpLayer);
 
+        Core.LoadLayer = new LoadLayer();
+        this.addChild(Core.LoadLayer);
+
+
         Core.UILayer.SetLoadView(LoadViewSkin);
 
         GameManage.Initialize();

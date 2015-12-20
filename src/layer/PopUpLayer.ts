@@ -13,8 +13,6 @@ class PopUpLayer extends eui.Group{
         this.pLst = [];
     }
 
-
-
     public AddPopUp(classFactory:any,effect?:boolean,alpha?:number):any{
         if( effect === void 0 ){effect = true}
         if(alpha == void 0){alpha = PopUpLayer.ModalAlpha}

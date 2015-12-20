@@ -32,8 +32,10 @@ module LoadManage{
 
         public StartLoad(arr:string[],classView:any):void{
             if( classView ){
+                this._view = Core.LoadLayer.ShowLoadView(classView);
+            }
+            if( arr != void 0 && arr.length > 0 ){
                 this._loadArr = arr;
-                this._view = Core.PopUpLayer.AddPopUp(classView,false);
                 this._totalLoad = this.getTotalNeedLoad(this._loadArr);
                 this._curLoad = 0;
 
@@ -56,10 +58,11 @@ module LoadManage{
 
         private endLoad():void{
             if( this._view ){
-                Core.PopUpLayer.RemovePopUp(this._view,false);
+                Core.LoadLayer.RemoveLoadView();
                 this._view = null;
-                gs.LoadComplete();
             }
+
+            gs.LoadComplete();
             this._loadArr = null;
         }
 

@@ -42,7 +42,8 @@ class  UILayer extends eui.Group{
             gs.addEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
             this.readyClassFactory = classFactory;
             this.readyMode = mode;
-            LoadManage.StartLoad([className],this.loadView);
+            LoadManage.StartLoad([className],null);
+            Core.LoadLayer.ShowMinLoading();
         }else{
             this.startShow(classFactory,mode);
         }

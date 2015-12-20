@@ -35,14 +35,15 @@ module MusicManage{
             }
         }
 
-        private addMusic(name:string,src:string):void{
-            if( this.soundLst[name] == void 0 ){
+        private addMusic(name:string,src:string):any{
+            var sound:any = this.soundLst[name];
+            if( sound == void 0 ){
                 var dom:any = document.getElementsByTagName("body")[0];
                 var nDiv:any = document.createElement("div");
                 nDiv.style.width = "0px";
                 nDiv.style.height="0px";
                 nDiv.style.position = "absolute";
-                var sound:any = document.createElement("audio");
+                sound = document.createElement("audio");
                 sound.id = name;
                 sound.preload= "preload";
                 sound.src = src;
@@ -52,6 +53,8 @@ module MusicManage{
 
                 this.soundLst[name] = sound;
             }
+
+            return sound;
         }
 
         public PlayMusic(name:string,type?:number):void{
@@ -59,12 +62,17 @@ module MusicManage{
             var sound:any = this.soundLst[name];
             if( sound != void 0 ){
                 if( type == MusicSys.EFFECT ){
-                    if( sound.hasOwnProperty("autoplay") ){
-                        delete sound["autoplay"];
-                        sound.play();
+                    delete sound["autoplay"];
+                    delete sound["loop"];
+                    var tag:number = 0;
+                    while( sound.paused == false ){
+                        tag ++;
+                        sound = this.addMusic(name+tag.toString(),sound.src);
                     }
+                    sound.play();
                 }else if( type == MusicSys.BACKGROUND ){
-                    sound["autoplay"] = "autoplay"
+                    sound["autoplay"] = "autoplay";
+                    sound["loop"] = "loop";
                 }
             }
         }

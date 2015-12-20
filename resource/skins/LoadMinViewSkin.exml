@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="skins.LoadMinViewSkin" width="750" height="45" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image x="0" y="0" width="750" height="45" alpha="0.6" source="black_jpg"/>
+	<e:BitmapLabel id="loadProgress" text="a0%" font="load_min_num_fnt" x="238" y="5"/>
+</e:Skin>
