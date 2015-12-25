@@ -25,7 +25,7 @@ module GameManage{
         }
 
         protected register( type:string,callback:Function,target:any ):void{
-           gs.addEventListener(type,callback,target);
+           gr.addEventListener(type,callback,target);
         }
 
         private handler( e:GameEvent ):void{

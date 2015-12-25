@@ -9,7 +9,7 @@ class LoadMinViewSkin extends SkinPanel{
     }
 
     protected onAdd():void{
-        this.registerListener(gs,GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+        this.registerListener(gr,GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
     }
 
     private onProgressHandler( e:GameEvent ):void{

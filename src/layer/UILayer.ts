@@ -39,7 +39,7 @@ class  UILayer extends eui.Group{
         }
 
         if( window["skins"][className] == void 0){
-            gs.addEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
+            gr.addEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
             this.readyClassFactory = classFactory;
             this.readyMode = mode;
             LoadManage.StartLoad([className],null);
@@ -50,7 +50,7 @@ class  UILayer extends eui.Group{
     }
 
     private onUILoadCompleteHandler(e:GameEvent):void{
-        gs.removeEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
+        gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
         this.startShow(this.readyClassFactory,this.readyMode);
         this.readyClassFactory = null;
         this.readyMode = null;
@@ -84,15 +84,15 @@ class  UILayer extends eui.Group{
             switch(mode){
                 case 1:
                     this.curShow.alpha = 0;
-                    egret.Tween.get(this.curShow).to({alpha:1},UILayer.CHANGE_TIME).call(this.Close,this).call(gs.EffectEnd,gs);
+                    egret.Tween.get(this.curShow).to({alpha:1},UILayer.CHANGE_TIME).call(this.Close,this).call(gr.EffectEnd,gr);
                     egret.Tween.get(this.lastShow).to({alpha:0},UILayer.CHANGE_TIME);
                     break;
                 case 2:
                     this.curShow.y = Core.Stage.height;
-                    egret.Tween.get(this.curShow).to({y:0},UILayer.CHANGE_TIME).call(this.Close,this).call(gs.EffectEnd,gs);
+                    egret.Tween.get(this.curShow).to({y:0},UILayer.CHANGE_TIME).call(this.Close,this).call(gr.EffectEnd,gr);
                     break;
                 case 3:
-                    egret.Tween.get(this.lastShow).to({y:Core.Stage.height},UILayer.CHANGE_TIME).call(this.Close,this).call(gs.EffectEnd,gs);
+                    egret.Tween.get(this.lastShow).to({y:Core.Stage.height},UILayer.CHANGE_TIME).call(this.Close,this).call(gr.EffectEnd,gr);
                     break;
                 default :
                     this.Close();
@@ -100,7 +100,7 @@ class  UILayer extends eui.Group{
             }
         }else{
             this.Close();
-            gs.EffectEnd();
+            gr.EffectEnd();
         }
     }
 

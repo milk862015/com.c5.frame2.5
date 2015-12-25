@@ -28,16 +28,16 @@ class Main extends eui.UILayer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.onResourceLoadComplete,this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.onResourceProgress,this);
             this.createScene();
-            gs.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+            gr.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
             LoadManage.Initialize();
             LoadManage.StartLoad(this.loadArr,LoadViewSkin);
         }
     }
 
     private onLoadCompleteHandler(e:GameEvent):void{
-        gs.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+        gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
 
-        //gs.Launch();
+        //gr.Launch();
     }
 
     private createScene():void{

@@ -62,14 +62,14 @@ module LoadManage{
                 this._view = null;
             }
 
-            gs.LoadComplete();
+            gr.LoadComplete();
             this._loadArr = null;
         }
 
         private onResourceProgress( e:RES.ResourceEvent ):void{
             if( this._loadArr.indexOf(e.groupName) != -1 ){
                 this._curLoad = this._curLoad + 1;
-                gs.LoadProgress(this._curLoad,this._totalLoad);
+                gr.LoadProgress(this._curLoad,this._totalLoad);
             }
         }
 

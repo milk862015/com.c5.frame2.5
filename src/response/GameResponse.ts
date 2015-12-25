@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015/9/28.
  */
-module gs {
+module gr {
     export function addEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number):void{
         instance.addEventListener(type, listener, thisObject, useCapture, priority);
     }
