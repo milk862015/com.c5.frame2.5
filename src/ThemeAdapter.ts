@@ -42,7 +42,7 @@ class ThemeAdapter implements eui.IThemeAdapter {
             compFunc.call(thisObject, e);
         }
         function onError(e:RES.ResourceEvent):void {
-            if(e.resItem.url == url) {
+            if(e.resItem["url"] == url) {
                 RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, onError, null);
                 errorFunc.call(thisObject);
             }

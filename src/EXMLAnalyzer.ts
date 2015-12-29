@@ -7,7 +7,7 @@ class EXMLAnalyzer extends RES.TextAnalyzer{
     }
 
     public analyzeData( resItem:RES.ResourceItem,data:any ):void{
-        var name:string = resItem.name;
+        var name:string = resItem["name"];
         if( this.fileDic[name] || !data ){
             return
         }

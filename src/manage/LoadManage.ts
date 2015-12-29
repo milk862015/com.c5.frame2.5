@@ -40,13 +40,11 @@ module LoadManage{
                 this._curLoad = 0;
 
                 var count:number = this._loadArr.length;
-                if( count > 0 ){
-                    for( var i:number=0;i<count;i++ ){
-                        RES.loadGroup(this._loadArr[i],i);
-                    }
-                }else{
-                    this.endLoad();
+                for( var i:number=0;i<count;i++ ){
+                    RES.loadGroup(this._loadArr[i],i);
                 }
+            }else{
+                this.endLoad();
             }
         }
 
