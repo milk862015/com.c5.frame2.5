@@ -3,6 +3,7 @@
  */
 class PopUpLayer extends eui.Group{
     static ModalAlpha:number = 0.8;
+    static ReadyClassName:string;
     private pLst:PopUpUnit[];
     constructor(){
         super();
@@ -13,7 +14,7 @@ class PopUpLayer extends eui.Group{
         this.pLst = [];
     }
 
-    public AddPopUp(classFactory:any,effect?:boolean,alpha?:number):any{
+    public AddPopUp(classFactory:any,effect?:boolean,alpha?:number):void{
         if( effect === void 0 ){effect = true}
         if(alpha == void 0){alpha = PopUpLayer.ModalAlpha}
 
@@ -27,6 +28,43 @@ class PopUpLayer extends eui.Group{
             }
         }
 
+        //检查资源是否加载了
+        var className:string = egret.getQualifiedClassName(classFactory);
+        if(typeof  className != "string"){
+            console.log("className not string");
+            return;
+        }
+
+        if( window["skins"][className] == void 0 ){
+            PopUpLayer.ReadyClassName = className;
+            gr.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+            gr.addEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+            Core.LoadLayer.ShowMinLoading();
+        }else{
+            this.startClear();
+            this.showPopUp(classFactory,effect,alpha);
+        }
+    }
+
+    private onLoadCompleteHandler(e:GameEvent):void{
+        this.startClear();
+    }
+
+    private onProgressHandler(e:GameEvent):void{
+        var data:any = e.data;
+        if( data["groupName"] != void 0 && data["groupName"] == PopUpLayer.ReadyClassName ){
+            this.startClear();
+        }
+    }
+
+    private startClear():void{
+        Core.LoadLayer.CloseMinLoading();
+        gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+        gr.removeEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+        PopUpLayer.ReadyClassName = null;
+    }
+
+    private showPopUp(classFactory:any,effect:boolean,alpha:number):void{
         var pu:PopUpUnit = new PopUpUnit(alpha);
         var target:any = new classFactory();
         target["anchorOffsetX"] = Core.Stage.stageWidth * 0.5;
@@ -41,9 +79,8 @@ class PopUpLayer extends eui.Group{
             target["scaleY"] = 0;
             egret.Tween.get(target).to({scaleX:1,scaleY:1},300,egret.Ease.backOut).call(gr.EffectEnd,gr);
         }else{
-           gr.EffectEnd();
+            gr.EffectEnd();
         }
-        return target;
     }
 
     public RemovePopUp(target:egret.DisplayObject,effect?:boolean ):void{

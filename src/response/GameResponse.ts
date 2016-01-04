@@ -10,10 +10,11 @@ module gr {
         instance.removeEventListener(type, listener, thisObject, useCapture)
     }
 
-    export function LoadProgress(cur:number,total:number):void{
+    export function LoadProgress(cur:number,total:number,groupName:string):void{
         var data:any = {};
         data.cur = cur;
         data.total = total;
+        data.groupName = groupName;
         instance.sendEvent(GameEvent.LOAD_PROGRESS,data);
     }
 

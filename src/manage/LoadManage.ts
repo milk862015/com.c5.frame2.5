@@ -67,7 +67,7 @@ module LoadManage{
         private onResourceProgress( e:RES.ResourceEvent ):void{
             if( this._loadArr.indexOf(e.groupName) != -1 ){
                 this._curLoad = this._curLoad + 1;
-                gr.LoadProgress(this._curLoad,this._totalLoad);
+                gr.LoadProgress(this._curLoad,this._totalLoad,e.groupName);
             }
         }
 

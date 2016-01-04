@@ -9,8 +9,9 @@ class  UILayer extends eui.Group{
 
     private loadView:any;
 
-    private readyClassFactory:any;
-    private readyMode:number;
+    static ReadyClassFactory:any;
+    static ReadyMode:number;
+    static ReadyClassName:string;
 
     private curClass:any;
     constructor(){
@@ -40,20 +41,37 @@ class  UILayer extends eui.Group{
 
         if( window["skins"][className] == void 0){
             gr.addEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
-            this.readyClassFactory = classFactory;
-            this.readyMode = mode;
-            LoadManage.StartLoad([className],null);
+            gr.addEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+            UILayer.ReadyClassFactory = classFactory;
+            UILayer.ReadyMode = mode;
+            UILayer.ReadyClassName = className;
+            //LoadManage.StartLoad([className],null);
             Core.LoadLayer.ShowMinLoading();
         }else{
+            this.startClear();
             this.startShow(classFactory,mode);
         }
     }
 
+    private onProgressHandler(e:GameEvent):void{
+        var data:any = e.data;
+        if(data["groupName"] != void 0 && data["groupName"] == UILayer.ReadyClassName ){
+            this.startClear();
+        }
+    }
+
     private onUILoadCompleteHandler(e:GameEvent):void{
+        //this.startShow(this.readyClassFactory,this.readyMode);
+        this.startClear();
+    }
+
+    private startClear():void{
+        Core.LoadLayer.CloseMinLoading();
+        gr.removeEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
         gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
-        this.startShow(this.readyClassFactory,this.readyMode);
-        this.readyClassFactory = null;
-        this.readyMode = null;
+        UILayer.ReadyClassFactory = null;
+        UILayer.ReadyMode = null;
+        UILayer.ReadyClassName = null;
     }
 
 
