@@ -35,4 +35,15 @@ module Func {
         target.x = x;
         target.y = y;
     }
+
+    export function AddChild(parent:egret.DisplayObjectContainer,target:egret.DisplayObject,scale?:number,x?:number,y?:number):void{
+        if(scale == void 0){scale = 1}
+        if(x == void 0){ x=Core.Stage.stageWidth*0.5 }
+        if(y == void 0){ y=Core.Stage.stageHeight*0.5 }
+        parent.addChild(target);
+        target.scaleX = scale;
+        target.scaleY = scale;
+        target.x = x;
+        target.y = y;
+    }
 }
