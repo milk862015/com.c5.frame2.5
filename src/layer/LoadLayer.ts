@@ -43,7 +43,7 @@ class LoadLayer extends eui.Group{
     }
 
     public ShowMinLoading():void{
-        this.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+        gr.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
         if( this.minView == null ){
             this.minView = new LoadMinViewSkin();
             this.addChild(this.minView);
@@ -56,7 +56,7 @@ class LoadLayer extends eui.Group{
 
     private onLoadCompleteHandler(e:GameEvent):void{
         egret.Tween.removeTweens(this.minView);
-        this.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+        gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
         if( this.minView ){
             if( this.minView.parent != null ){
                 this.minView.parent.removeChild(this.minView);
