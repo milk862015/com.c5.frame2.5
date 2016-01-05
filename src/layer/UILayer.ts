@@ -39,9 +39,9 @@ class  UILayer extends eui.Group{
             return;
         }
 
-        if( window["skins"][className] == void 0){
+        if( RES.isGroupLoaded(className) == false){
             gr.addEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
-            gr.addEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+            gr.addEventListener(GameEvent.LOAD_GROUP_COMPLETE,this.onUILoadGroupCompleteHandler,this);
             UILayer.ReadyClassFactory = classFactory;
             UILayer.ReadyMode = mode;
             UILayer.ReadyClassName = className;
@@ -53,9 +53,9 @@ class  UILayer extends eui.Group{
         }
     }
 
-    private onProgressHandler(e:GameEvent):void{
-        var data:any = e.data;
-        if(data["groupName"] != void 0 && data["groupName"] == UILayer.ReadyClassName ){
+    private onUILoadGroupCompleteHandler(e:GameEvent):void{
+        var groupName:string = <string>e.data;
+        if(groupName != void 0 && groupName == UILayer.ReadyClassName ){
             this.startClear();
         }
     }
@@ -67,7 +67,7 @@ class  UILayer extends eui.Group{
 
     private startClear():void{
         Core.LoadLayer.CloseMinLoading();
-        gr.removeEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+        gr.removeEventListener(GameEvent.LOAD_GROUP_COMPLETE,this.onUILoadGroupCompleteHandler,this);
         gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);
         UILayer.ReadyClassFactory = null;
         UILayer.ReadyMode = null;
@@ -128,5 +128,4 @@ class  UILayer extends eui.Group{
             this.lastShow = null;
         }
     }
-
 }

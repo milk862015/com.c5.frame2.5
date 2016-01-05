@@ -18,6 +18,10 @@ module gr {
         instance.sendEvent(GameEvent.LOAD_PROGRESS,data);
     }
 
+    export function LoadGroupComplete(groupName:string):void{
+        instance.sendEvent(GameEvent.LOAD_GROUP_COMPLETE,groupName);
+    }
+
     export function LoadComplete():void{
         instance.sendEvent(GameEvent.LOAD_COMPETE);
     }

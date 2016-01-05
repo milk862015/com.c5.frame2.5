@@ -16,11 +16,19 @@ module LoadManage{
         return instance.GetView();
     }
 
+    export function getCurLoad():number{
+        return instance._curLoad;
+    }
+
+    export function getTotalLoad():number{
+        return instance._totalLoad;
+    }
+
     class LoadSys{
         private _loadArr:string[];
         private _view:any;
-        private _totalLoad:number = 0;
-        private _curLoad:number = 0;
+        public _totalLoad:number = 0;
+        public _curLoad:number = 0;
         constructor(){
 
         }
@@ -41,7 +49,7 @@ module LoadManage{
 
                 var count:number = this._loadArr.length;
                 for( var i:number=0;i<count;i++ ){
-                    RES.loadGroup(this._loadArr[i],i);
+                    RES.loadGroup(this._loadArr[i],count-i);
                 }
             }else{
                 this.endLoad();
@@ -49,6 +57,7 @@ module LoadManage{
         }
 
         private onResourceLoadComplete( e:RES.ResourceEvent ):void{
+            gr.LoadGroupComplete(e.groupName);
             if( this._curLoad >= this._totalLoad ){
                 this.endLoad();
             }

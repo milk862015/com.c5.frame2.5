@@ -28,17 +28,32 @@ class Main extends eui.UILayer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.onResourceLoadComplete,this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.onResourceProgress,this);
             this.createScene();
+            gr.addEventListener(GameEvent.LOAD_GROUP_COMPLETE,this.onLoadGroupCompleteHandler,this);
             gr.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
             LoadManage.Initialize();
-            LoadManage.StartLoad(this.loadArr,LoadViewSkin);
+            LoadManage.StartLoad(this.loadArr,null);
+        }
+    }
+
+    private onLoadGroupCompleteHandler(e:GameEvent):void{
+        var groupName:string = <string>e.data;
+        if( groupName == "LaunchSkin" ){
+            this.startShow();
         }
     }
 
     private onLoadCompleteHandler(e:GameEvent):void{
-        gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
-
-        //gr.Launch();
+        this.startShow();
     }
+
+    private startShow():void{
+        gr.removeEventListener(GameEvent.LOAD_PROGRESS,this.onLoadGroupCompleteHandler,this);
+        gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
+        //DragonBonesManage.Initialize();
+        gr.Launch();
+    }
+
+
 
     private createScene():void{
         //初始化层

@@ -14,7 +14,7 @@ class PopUpLayer extends eui.Group{
         this.pLst = [];
     }
 
-    public AddPopUp(classFactory:any,effect?:boolean,alpha?:number):void{
+    public AddPopUp(classFactory:any,effect?:boolean,alpha?:number):any{
         if( effect === void 0 ){effect = true}
         if(alpha == void 0){alpha = PopUpLayer.ModalAlpha}
 
@@ -24,7 +24,7 @@ class PopUpLayer extends eui.Group{
             var ta:any = this.pLst[i];
             var taName:string = egret.getQualifiedClassName(ta.GetChild());
             if( taName == cName ){
-                return;//存在相同立刻退出
+                return false;//存在相同立刻退出
             }
         }
 
@@ -32,17 +32,18 @@ class PopUpLayer extends eui.Group{
         var className:string = egret.getQualifiedClassName(classFactory);
         if(typeof  className != "string"){
             console.log("className not string");
-            return;
+            return false;
         }
 
-        if( window["skins"][className] == void 0 ){
+        if( RES.isGroupLoaded(className) == false){
             PopUpLayer.ReadyClassName = className;
             gr.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
             gr.addEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
             Core.LoadLayer.ShowMinLoading();
+            return false
         }else{
             this.startClear();
-            this.showPopUp(classFactory,effect,alpha);
+            return this.showPopUp(classFactory,effect,alpha);
         }
     }
 
@@ -64,7 +65,7 @@ class PopUpLayer extends eui.Group{
         PopUpLayer.ReadyClassName = null;
     }
 
-    private showPopUp(classFactory:any,effect:boolean,alpha:number):void{
+    private showPopUp(classFactory:any,effect:boolean,alpha:number):PopUpUnit{
         var pu:PopUpUnit = new PopUpUnit(alpha);
         var target:any = new classFactory();
         target["anchorOffsetX"] = Core.Stage.stageWidth * 0.5;
@@ -81,6 +82,7 @@ class PopUpLayer extends eui.Group{
         }else{
             gr.EffectEnd();
         }
+        return pu;
     }
 
     public RemovePopUp(target:egret.DisplayObject,effect?:boolean ):void{
