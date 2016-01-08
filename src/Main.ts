@@ -53,8 +53,6 @@ class Main extends eui.UILayer {
         gr.Launch();
     }
 
-
-
     private createScene():void{
         //初始化层
         Core.Stage = this.stage;
