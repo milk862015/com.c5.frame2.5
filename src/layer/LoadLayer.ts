@@ -54,8 +54,8 @@ class LoadLayer extends eui.Group{
     }
 
     public CloseMinLoading():void{
-        egret.Tween.removeTweens(this.minView);
         if( this.minView ){
+            egret.Tween.removeTweens(this.minView);
             if( this.minView.parent != null ){
                 this.minView.parent.removeChild(this.minView);
             }
