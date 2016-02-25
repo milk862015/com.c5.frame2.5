@@ -59,11 +59,13 @@ module MusicManage{
 
         public PlayMusic(name:string,type?:number):void{
             if( type == void 0 ){type=MusicSys.EFFECT}
+
             var sound:any = this.soundLst[name];
             if( sound != void 0 ){
                 if( type == MusicSys.EFFECT ){
                     delete sound["autoplay"];
                     delete sound["loop"];
+                    sound.removeEventListener("ended",this.playFunc,false);
                     var tag:number = 0;
                     while( sound.paused == false ){
                         tag ++;
@@ -72,9 +74,15 @@ module MusicManage{
                     sound.play();
                 }else if( type == MusicSys.BACKGROUND ){
                     sound["autoplay"] = "autoplay";
-                    sound["loop"] = "loop";
+                    sound.play();
+                    sound.addEventListener("ended",this.playFunc,false);
                 }
             }
+        }
+
+        private playFunc(e:any):void{
+            var sound = e.target;
+            setTimeout(function(){sound.play()},100)
         }
 
         public StopMusic(name:string):void{
@@ -82,8 +90,9 @@ module MusicManage{
             if( sound != void 0 ){
                 if( sound.hasOwnProperty("autoplay") ){
                     delete  sound["autoplay"];
+                    sound.removeEventListener("ended",this.playFunc,false);
                 }
-                sound.stop();
+                sound.pause();
             }
         }
     }
