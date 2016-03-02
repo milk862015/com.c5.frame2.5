@@ -27,8 +27,15 @@ module DragonBonesManage{
 
         public Initialize():void{
             this.dragonBonesFactory = new dragonBones.EgretFactory();
+            var lastTime:number = 0;
             egret.startTick(function(frameTime:number):boolean{
-                    dragonBones.WorldClock.clock.advanceTime(0.01);
+                    if( lastTime == 0 ){
+                        lastTime = frameTime;
+                    }else{
+                        var nt:number = (frameTime - lastTime)/1000
+                        dragonBones.WorldClock.clock.advanceTime(nt);
+                        lastTime = frameTime;
+                    }
                     return true;
                 },this);
 
