@@ -45,7 +45,7 @@ module MusicManage{
                 nDiv.style.position = "absolute";
                 sound = document.createElement("audio");
                 sound.id = name;
-                sound.preload= "preload";
+                sound.preload= "auto";
                 sound.src = src;
 
                 nDiv.appendChild(sound);

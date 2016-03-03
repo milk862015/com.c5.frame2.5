@@ -45,7 +45,7 @@ class  UILayer extends eui.Group{
             UILayer.ReadyClassFactory = classFactory;
             UILayer.ReadyMode = mode;
             UILayer.ReadyClassName = className;
-            //LoadManage.StartLoad([className],null);
+            LoadManage.StartLoad([className],null);
             Core.LoadLayer.ShowMinLoading();
         }else{
             this.startClear();
@@ -61,11 +61,14 @@ class  UILayer extends eui.Group{
     }
 
     private onUILoadCompleteHandler(e:GameEvent):void{
-        //this.startShow(this.readyClassFactory,this.readyMode);
         this.startClear();
     }
 
     private startClear():void{
+        if( UILayer.ReadyClassFactory ){
+            this.startShow(UILayer.ReadyClassFactory,UILayer.ReadyMode);
+        }
+
         Core.LoadLayer.CloseMinLoading();
         gr.removeEventListener(GameEvent.LOAD_GROUP_COMPLETE,this.onUILoadGroupCompleteHandler,this);
         gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onUILoadCompleteHandler,this);

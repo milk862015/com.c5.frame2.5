@@ -7,7 +7,7 @@
 
 LayoutSys = {};
 LayoutSys.screenW = 750;
-LayoutSys.screenH = 1206;
+LayoutSys.screenH = 1208;
 LayoutSys.scale = 0;
 LayoutSys.scaleX = 0;
 LayoutSys.scaleY = 0;
@@ -30,24 +30,10 @@ LayoutSys.Show = function(){
         img.id = id;
         img.style.display = "none";
         img.style.position = "absolute";
-        if(id == "share_img"){
-            img.src = "resource/share.png";
-        }else if( id == "ew" ){
-            dd.appendChild(img);
-            continue;
+        if( id == "ew" ){
+            img.src = "resource/ui/ew.png";
         }
         div.appendChild(img);
-    }
-
-    LayoutSys.canvas = document.getElementsByTagName("canvas")[0];
-
-    LayoutSys.scaleX = LayoutSys.canvas.offsetWidth/LayoutSys.screenW;
-    LayoutSys.scaleY = LayoutSys.canvas.offsetHeight/LayoutSys.screenH;
-
-    if( LayoutSys.scaleX > LayoutSys.scaleY ){
-        LayoutSys.scale = LayoutSys.scaleY
-    }else{
-        LayoutSys.scale = LayoutSys.scaleX;
     }
 
     for(var key in LayoutSys.imgInfo){
@@ -61,17 +47,10 @@ LayoutSys.Init = function(){
     LayoutSys.curClientWidth = document.documentElement.offsetWidth;
     LayoutSys.curClinetHeight = document.documentElement.offsetHeight;
 
-    var scaleX = LayoutSys.curClientWidth/LayoutSys.screenW;
-    var scaleY = LayoutSys.curClinetHeight/LayoutSys.screenH;
-    scaleX = Math.floor(scaleX*100)/100;
-    scaleY = Math.floor(scaleY*100)/100;
-    if( scaleX > scaleY ){
-        LayoutSys.scale = scaleY
-    }else{
-        LayoutSys.scale = scaleX;
-    }
-    LayoutSys.scaleX = scaleX;
-    LayoutSys.scaleY = scaleY;
+    LayoutSys.canvas = document.getElementsByTagName("canvas")[0];
+
+    LayoutSys.scaleX = LayoutSys.canvas.offsetWidth/LayoutSys.screenW;
+    LayoutSys.scaleY = LayoutSys.canvas.offsetHeight/LayoutSys.screenH;
 };
 
 
@@ -129,7 +108,7 @@ LayoutSys.ShowEW = function(x,y,w,h){
             LayoutSys.setStyleAuto(img,"height",h);
         }
 
-        img.src = "resource/ui/ew.png";
+        //img.src = "resource/ui/ew.png";
         img.style.display = "block";
     }
 };

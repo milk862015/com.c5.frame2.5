@@ -3,7 +3,12 @@
  */
 class PopUpLayer extends eui.Group{
     static ModalAlpha:number = 0.8;
+
+    static ReadyClassFactory:any;
+    static ReadyAlpha:number;
     static ReadyClassName:string;
+    static ReadyEffect:number;
+
     private pLst:PopUpUnit[];
     constructor(){
         super();
@@ -14,8 +19,8 @@ class PopUpLayer extends eui.Group{
         this.pLst = [];
     }
 
-    public AddPopUp(classFactory:any,effect?:boolean,alpha?:number):any{
-        if( effect === void 0 ){effect = true}
+    public AddPopUp(classFactory:any,effect?:number,alpha?:number):any{
+        if( effect === void 0 ){effect = 1}
         if(alpha == void 0){alpha = PopUpLayer.ModalAlpha}
 
         //检查是否存在相同类型的弹窗
@@ -31,7 +36,6 @@ class PopUpLayer extends eui.Group{
         //检查资源是否加载了
         var className:string = egret.getQualifiedClassName(classFactory);
         if(typeof  className != "string"){
-            console.log("className not string");
             return false;
         }
 
@@ -39,6 +43,12 @@ class PopUpLayer extends eui.Group{
             PopUpLayer.ReadyClassName = className;
             gr.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
             gr.addEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+
+            PopUpLayer.ReadyClassFactory = classFactory;
+            PopUpLayer.ReadyAlpha = alpha;
+            PopUpLayer.ReadyEffect = effect;
+
+            LoadManage.StartLoad([className],null);
             Core.LoadLayer.ShowMinLoading();
             return false
         }else{
@@ -59,13 +69,24 @@ class PopUpLayer extends eui.Group{
     }
 
     private startClear():void{
-        Core.LoadLayer.CloseMinLoading();
         gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
         gr.removeEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
+        egret.Tween.get(this).wait(200).call(this.startShow,this)
+    }
+
+    private startShow():void{
+        if( PopUpLayer.ReadyClassFactory ){
+            this.showPopUp(PopUpLayer.ReadyClassFactory,PopUpLayer.ReadyEffect,PopUpLayer.ReadyAlpha);
+        }
+        Core.LoadLayer.CloseMinLoading();
+
+        PopUpLayer.ReadyClassFactory = null;
+        PopUpLayer.ReadyEffect = 0;
+        PopUpLayer.ReadyAlpha = 0;
         PopUpLayer.ReadyClassName = null;
     }
 
-    private showPopUp(classFactory:any,effect:boolean,alpha:number):PopUpUnit{
+    private showPopUp(classFactory:any,effect:number,alpha:number):PopUpUnit{
         var pu:PopUpUnit = new PopUpUnit(alpha);
         var target:any = new classFactory();
         target["anchorOffsetX"] = Core.Stage.stageWidth * 0.5;
@@ -75,7 +96,7 @@ class PopUpLayer extends eui.Group{
         pu.SetChild(target);
         this.pLst.push(pu);
         this.addChild(pu);
-        if( effect ){
+        if( effect == 1 ){
             target["scaleX"] = 0;
             target["scaleY"] = 0;
             egret.Tween.get(target).to({scaleX:1,scaleY:1},300,egret.Ease.backOut).call(gr.EffectEnd,gr);
