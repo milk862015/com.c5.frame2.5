@@ -3,13 +3,19 @@ class Main extends eui.UILayer {
     protected createChildren(): void {
         //注入自定义的素材解释器
         this.stage.registerImplementation("eui.IAssetAdapter",new AssetAdapter());
-
+        HttpNet.Initialize();
+        WxManage.Initialize();
         super.createChildren();
         //var theme = new eui.Theme("resource/default.thm.json", this.stage);
         RES.registerAnalyzer("exml",EXMLAnalyzer);
         //RES.registerAnalyzer("xml",RES.XMLAnalyzer);
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE,this.onConfigComplete,this);
-        RES.loadConfig("resource/default.res.json","resource/")
+        RES.loadConfig("resource/default.res.json","resource/");
+    }
+
+    private callback(result:number,data:any):void{
+        console.log("---------data--------");
+        console.log(result,data);
     }
 
     private onConfigComplete( e:RES.ResourceEvent ):void{
@@ -75,6 +81,7 @@ class Main extends eui.UILayer {
         Core.UILayer.SetLoadView(LoadViewSkin);
 
         GameManage.Initialize();
+
     }
 }
 

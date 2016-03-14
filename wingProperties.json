@@ -1,21 +1,17 @@
 {
-	"close":false,
-	"resourcePlugin":
-	{
-		"configs":[
-		{
-			"configPath":"resource/default.res.json",
-			"relativePath":"resource/"
-		}],
+	"close":true,
+	"resourcePlugin":{
+		"configs":[{
+				"configPath":"resource/default.res.json",
+				"relativePath":"resource/"
+			}],
 		"id":"org.egret-labs.resource",
-		"library":
-		{
-			"children":[
-			{
-				"isFolder":false,
-				"key":"black_jpg",
-				"name":"black_jpg"
-			}]
+		"library":{
+			"children":[{
+					"isFolder":false,
+					"key":"black_jpg",
+					"name":"black_jpg"
+				}]
 		}
 	},
 	"theme":"resource/default.thm.json"
