@@ -11,11 +11,12 @@ class Main extends eui.UILayer {
         //RES.registerAnalyzer("xml",RES.XMLAnalyzer);
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE,this.onConfigComplete,this);
         RES.loadConfig("resource/default.res.json","resource/");
+        gr.addEventListener(GameEvent.WX_READY,this.onWxReadyHandler,this);
     }
 
-    private callback(result:number,data:any):void{
-        console.log("---------data--------");
-        console.log(result,data);
+    private onWxReadyHandler(e:GameEvent):void{
+        gr.removeEventListener(GameEvent.WX_READY,this.onWxReadyHandler,this);
+        alert("ready success");
     }
 
     private onConfigComplete( e:RES.ResourceEvent ):void{

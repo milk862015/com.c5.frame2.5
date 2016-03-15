@@ -10,6 +10,8 @@ class GameEvent extends egret.Event{
 
     static EFFECT_END:string = "effect_end";
 
+    static WX_READY:string = "wx_ready";
+
     public constructor(type:string, bubbles:boolean=false, cancelable:boolean=false,data?:any){
         super(type,bubbles,cancelable,data);
     }

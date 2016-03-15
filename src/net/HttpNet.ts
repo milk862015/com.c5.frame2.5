@@ -29,12 +29,25 @@ module HttpNet{
             request.responseType = egret.HttpResponseType.TEXT;
 
             var mSrc:string = "url";
+
+            var value:string = "";
+            if( data != void 0 ){
+                for( var i in data ){
+                    if( value == "" ){
+                        value = value + i + "=" + data[i];
+                    }else{
+                        value = value + "&" + i + "=" + data[i];
+                    }
+                }
+            }
+
             if(mode == HttpNet.POST){
                 mSrc = egret.HttpMethod.POST;
+                request.open(url,mSrc);
             }else{
                 mSrc = egret.HttpMethod.GET;
+                request.open(url+"?"+ value,mSrc)
             }
-            request.open(url,mSrc);
             request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
             var respHandler = function(evt:egret.Event){
@@ -49,16 +62,7 @@ module HttpNet{
             };
 
             request.once(egret.Event.COMPLETE,respHandler,null);
-
-            if( data != void 0 ){
-                var value:string = "";
-                for( var i in data ){
-                    if( value == "" ){
-                        value = value + i + "=" + data[i];
-                    }else{
-                        value = value + "&" + i + "=" + data[i];
-                    }
-                }
+            if( value != ""  && mode == HttpNet.POST ){
                 request.send(value);
             }else{
                 request.send()

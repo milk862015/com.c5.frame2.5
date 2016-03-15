@@ -34,6 +34,10 @@ module gr {
         instance.sendEvent(GameEvent.EFFECT_END);
     }
 
+    export function WxReady():void{
+        instance.sendEvent(GameEvent.WX_READY);
+    }
+
     class GameResponse extends egret.EventDispatcher{
         constructor(){
             super();
