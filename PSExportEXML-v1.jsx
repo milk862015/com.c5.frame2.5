@@ -106,7 +106,7 @@ function init () {
 
 	if (saveEXML || savePNGs) {
 		var exml = "<?xml version='1.0' encoding='utf-8'?>\n";
-		exml += '<e:Skin  width=\"'+ stageWidth +'\" height=\"'+ stageHeight +'\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\">'
+		exml += '<e:Skin class=\"skins.' + name  + '\" '  +  ' width=\"'+ stageWidth +'\" height=\"'+ stageHeight +'\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\">'
 		for (var i = layerCount - 1; i >= 0; i--) {
 			var layer = layers[i];
 			
