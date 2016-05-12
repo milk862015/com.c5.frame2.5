@@ -1,4 +1,4 @@
-//export hidden layer
+﻿//export hidden layer
 var ignoreHiddenLayers = true;
 var savePNGs = true;
 var saveEXML = true;
@@ -14,7 +14,7 @@ function alertDialog () {
 
 	var dialog = new Window("dialog", "Export");
 
-	dialog.savePNGs = dialog.add("checkbox", undefined, "Export PNGs"); 
+	dialog.savePNGs = dialog.add("checkbox", undefined, "Export Images"); 
 	dialog.savePNGs.value = savePNGs;
 	dialog.savePNGs.alignment = "left";
 
@@ -51,10 +51,12 @@ function alertDialog () {
 		scaleImage = scaleSlider.value / 100;
 		init();
 		this.parent.close(0);
+        //this.parent.remove();
 	};
 
 	cancelButton.onClick = function() {
         this.parent.close(0); 
+        //this.parent.remove();
         return; 
     };
 	
@@ -80,11 +82,16 @@ function init () {
     var name = decodeURI(app.activeDocument.name);
 	name = name.substring(0, name.indexOf("."));
    
-	var dir = app.activeDocument.path + "/exml/"+name+"/";
-
+	var dir = app.activeDocument.path + "/../resource/";
+    var res = app.activeDocument.path + "/../res/";
+    var bgDir = dir + "bg/";
+    var skinDir = dir + "skins/";
     new Folder(dir).create();
+    new Folder(res).create();
+    new Folder(bgDir).create();
+    new Folder(skinDir).create();
     if(savePNGs){
-        new Folder(dir + "/texture/" ).create();
+        new Folder(res + name +"/" ).create();
     }
 
 	app.activeDocument.duplicate();
@@ -124,11 +131,32 @@ function init () {
 			var height = app.activeDocument.height.as("px") * scaleImage; 
 			y -= height;
 			// Save image.
-			if (savePNGs) {              
+             var ln = layerName[i].replace("_png",".png");
+             ln = ln.replace("_jpg",".jpg");
+			if (savePNGs && ( ln.indexOf(".png") != -1 || ln.indexOf(".jpg") != -1 )) {              
                   if (scaleImage != 1) scaleImages();                  
-                  var file = File(dir + "/texture/" + layerName[i] );
-                  if (file.exists) file.remove();
-                  activeDocument.saveAs(file, new PNGSaveOptions(), true, Extension.LOWERCASE);
+                  var file;
+                  
+                    var option = new ExportOptionsSaveForWeb();
+                    var isCreate = false;
+                    //设置图片输出的色彩范围为256色。
+                    option.colors = 256;
+                  
+                  if(  ln.indexOf (".png") != -1 ){
+                        file = File(res + name +"/" + ln );
+                        if (file.exists) file.remove();
+                        option.format = SaveDocumentType.PNG;
+                        //设置图片输出时支持透明度。
+                        option.transparency = true;
+                  }else if(ln.indexOf (".jpg") != -1){
+                      file = File( bgDir + ln );
+                       if (file.exists) file.remove();
+                      option.format = SaveDocumentType.JPEG;
+                        //设置图片输出时支持透明度。
+                        option.transparency = false;
+                  }
+                  app.activeDocument.exportDocument (file, ExportType.SAVEFORWEB, option)
+                  //activeDocument.saveAs(file, new PNGSaveOptions(), true, Extension.LOWERCASE);
                   if (scaleImage != 1) stepHistoryBack();                
 			}
 			if (!layer.isBackgroundLayer) {
@@ -141,14 +169,18 @@ function init () {
                 //}
 			}
 			layer.visible = false;
-           
-            exml += '\n     <e:Image source=\"' + layerName[i] + '_png' +'\" x=\"'+ x +'\" y=\"'+ y +'\"/>'
+           if( ln.indexOf(".png") != -1 ){
+                    exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x +'\" y=\"'+ y +'\"/>'
+           }else if( ln.indexOf(".jpg") != -1  ){
+                    exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x +'\" y=\"'+ y +'\"/>'
+           }
+            
 		}
 
 
 		exml += "\n</e:Skin>"
 		if (saveEXML) {
-			var file = new File(dir + name + ".exml");
+			var file = new File(skinDir + name + ".exml");
 			file.remove();
 			file.open("a");
 			file.lineFeed = "\n";
