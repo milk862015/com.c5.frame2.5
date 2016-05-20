@@ -141,11 +141,14 @@ function init () {
                     var isCreate = false;
                     //设置图片输出的色彩范围为256色。
                     option.colors = 256;
+                    option.quality = 100;
                   
                   if(  ln.indexOf (".png") != -1 ){
                         file = File(res + name +"/" + ln );
                         if (file.exists) file.remove();
                         option.format = SaveDocumentType.PNG;
+                        option.PNG8 = false; 
+    					option.interlaced = false; 
                         //设置图片输出时支持透明度。
                         option.transparency = true;
                   }else if(ln.indexOf (".jpg") != -1){
