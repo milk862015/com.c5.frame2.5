@@ -37,6 +37,8 @@ module gr {
     export function WxReady():void{
         instance.sendEvent(GameEvent.WX_READY);
     }
+  
+//-------这里自动添加代码分割线-------
 
     class GameResponse extends egret.EventDispatcher{
         constructor(){
