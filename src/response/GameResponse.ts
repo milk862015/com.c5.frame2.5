@@ -37,6 +37,10 @@ module gr {
     export function WxReady():void{
         instance.sendEvent(GameEvent.WX_READY);
     }
+
+    export function Debug():void{
+        instance.sendEvent(GameEvent.DEBUG);
+    }
   
 //-------这里自动添加代码分割线-------
 

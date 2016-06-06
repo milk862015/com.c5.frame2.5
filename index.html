@@ -21,6 +21,7 @@
         }
     </style>
 
+    <script src="resource/js/debug.js"></script>
     <script src="resource/js/gb.js"></script>
     <script src="resource/js/layout.js"></script>
     <!--这个标签为通过egret提供的第三方库的方式生成的 javascript 文件-->
@@ -32,9 +33,8 @@
 	<script egret="lib" src="libs/modules/game/game.js" src-release="libs/modules/game/game.min.js"></script>
 	<script egret="lib" src="libs/modules/game/game.web.js" src-release="libs/modules/game/game.web.min.js"></script>
 	<script egret="lib" src="libs/modules/socket/socket.js" src-release="libs/modules/socket/socket.min.js"></script>
-	<script egret="lib" src="libs/modules/dragonbones/dragonbones.js" src-release="libs/modules/dragonbones/dragonbones.min.js"></script>
+	<script egret="lib" src="libs/modules/dragonBones/dragonBones.js" src-release="libs/modules/dragonBones/dragonBones.min.js"></script>
 	<script egret="lib" src="libs/modules/tween/tween.js" src-release="libs/modules/tween/tween.min.js"></script>
-	<script egret="lib" src="libs/modules/weixinapi/weixinapi.js" src-release="libs/modules/weixinapi/weixinapi.min.js"></script>
 	<!--modules_files_end-->
 
     <!--这个标签为不通过egret提供的第三方库的方式使用的 javascript 文件，请将这些文件放在libs下，但不要放在modules下面。-->
@@ -44,36 +44,38 @@
     <!--这个标签会被替换为项目中所有的 javascript 文件-->
     <!--game_files_start-->
 	<script egret="game" src="bin-debug/AssetAdapter.js"></script>
-	<script egret="game" src="bin-debug/EXMLAnalyzer.js"></script>
-	<script egret="game" src="bin-debug/Main.js"></script>
-	<script egret="game" src="bin-debug/ThemeAdapter.js"></script>
 	<script egret="game" src="bin-debug/component/ui/SkinPanel.js"></script>
+	<script egret="game" src="bin-debug/component/ui/UIPanel.js"></script>
+	<script egret="game" src="bin-debug/component/ui/DebugSkin.js"></script>
 	<script egret="game" src="bin-debug/component/ui/LaunchSkin.js"></script>
 	<script egret="game" src="bin-debug/component/ui/LoadMinViewSkin.js"></script>
 	<script egret="game" src="bin-debug/component/ui/LoadViewSkin.js"></script>
-	<script egret="game" src="bin-debug/component/ui/UIPanel.js"></script>
 	<script egret="game" src="bin-debug/event/GameEvent.js"></script>
 	<script egret="game" src="bin-debug/event/SocketEvent.js"></script>
+	<script egret="game" src="bin-debug/EXMLAnalyzer.js"></script>
 	<script egret="game" src="bin-debug/func/func.js"></script>
 	<script egret="game" src="bin-debug/global/Core.js"></script>
+	<script egret="game" src="bin-debug/global/debug.js"></script>
 	<script egret="game" src="bin-debug/global/GameData.js"></script>
+	<script egret="game" src="bin-debug/global/gb.js"></script>
 	<script egret="game" src="bin-debug/layer/GameLayer.js"></script>
 	<script egret="game" src="bin-debug/layer/LoadLayer.js"></script>
 	<script egret="game" src="bin-debug/layer/MusicLayer.js"></script>
 	<script egret="game" src="bin-debug/layer/PopUpLayer.js"></script>
 	<script egret="game" src="bin-debug/layer/UILayer.js"></script>
+	<script egret="game" src="bin-debug/Main.js"></script>
 	<script egret="game" src="bin-debug/manage/DragonBonesManage.js"></script>
 	<script egret="game" src="bin-debug/manage/GameManage.js"></script>
 	<script egret="game" src="bin-debug/manage/GravityManage.js"></script>
 	<script egret="game" src="bin-debug/manage/LoadManage.js"></script>
 	<script egret="game" src="bin-debug/manage/MusicManager.js"></script>
-	<script egret="game" src="bin-debug/manage/WxManage.js"></script>
 	<script egret="game" src="bin-debug/net/HttpNet.js"></script>
 	<script egret="game" src="bin-debug/net/WSNet.js"></script>
 	<script egret="game" src="bin-debug/port/DataPort.js"></script>
 	<script egret="game" src="bin-debug/port/SocketPort.js"></script>
 	<script egret="game" src="bin-debug/response/GameResponse.js"></script>
 	<script egret="game" src="bin-debug/response/SocketResponse.js"></script>
+	<script egret="game" src="bin-debug/ThemeAdapter.js"></script>
 	<script egret="game" src="bin-debug/tools/GameObject.js"></script>
 	<script egret="game" src="bin-debug/tools/ObjectPool.js"></script>
 	<script egret="game" src="bin-debug/unit/PopUpUnit.js"></script>
