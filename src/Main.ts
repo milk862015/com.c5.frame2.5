@@ -24,6 +24,15 @@ class Main extends eui.UILayer {
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.onResourceLoadComplete,this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.onResourceProgress,this);
         RES.loadGroup("loadRes");
+
+        if( typeof RES["configInstance"]["groupDic"] != "undefined" ){
+            this.loadArr = [];
+            for( var key in RES["configInstance"]["groupDic"] ){
+                if( key != "loadRes" ){
+                    this.loadArr.unshift(key);
+                }
+            }
+        }
     }
 
     private onResourceProgress(e:RES.ResourceEvent):void{
