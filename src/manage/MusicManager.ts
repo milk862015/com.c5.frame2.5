@@ -45,8 +45,9 @@ module MusicManage{
                 nDiv.style.position = "absolute";
                 sound = document.createElement("audio");
                 sound.id = name;
-                sound.preload= "auto";
+                //sound.preload= "auto";
                 sound.src = src;
+                sound.load();//先缓存起来
 
                 nDiv.appendChild(sound);
                 dom.appendChild(nDiv);

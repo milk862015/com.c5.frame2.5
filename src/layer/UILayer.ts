@@ -117,6 +117,7 @@ class  UILayer extends eui.Group{
                     break;
                 default :
                     this.Close();
+                    gr.EffectEnd();
                     break;
             }
         }else{
