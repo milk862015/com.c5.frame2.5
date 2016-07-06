@@ -1,6 +1,7 @@
 /**
  * Created by milk on 16/3/8.
  */
+    /*
 module WxManage {
     export const BASE_SHARE_LINK:string = "http://fun.xiaoxiemm.com/test/test.html";
     export const BASE_SHARE_IMG:string = "http://fun.xiaoxiemm.com/test/share.jpeg";
@@ -126,3 +127,4 @@ module WxManage {
 
     var instance:WxSys = new WxSys();
 }
+ */
