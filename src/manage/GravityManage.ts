@@ -19,7 +19,7 @@ module GravityManage{
         instance.Stop();
     }
 
-    class GravityEvent extends egret.Event{
+    export class GravityEvent extends egret.Event{
         static CHANGE:string = "change";
         public angleX:number = 0;
         public angleY:number = 0;
@@ -42,9 +42,12 @@ module GravityManage{
         public Start():void{
             window.ondevicemotion = function(e){
                 var ge:GravityEvent = new GravityEvent(GravityEvent.CHANGE);
-                ge.angleX = e.rotationRate.beta;
-                ge.angleY = e.rotationRate.gamma;
-                ge.angleZ = e.rotationRate.alpha;
+                // ge.angleX = e.rotationRate.beta;
+                // ge.angleY = e.rotationRate.gamma;
+                // ge.angleZ = e.rotationRate.alpha;
+                ge.angleX = e.accelerationIncludingGravity.x;
+                ge.angleY = e.accelerationIncludingGravity.y;
+                ge.angleZ = e.accelerationIncludingGravity.z;
                 instance.dispatchEvent(ge);
             }
         }
