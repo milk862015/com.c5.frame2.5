@@ -1,5 +1,3 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<e:Skin width="750" height="1208" class="skins.LaunchSkin" xmlns:e="http://ns.egret.com/eui">
-	<e:Image horizontalCenter="0" verticalCenter="0" source="launchBg_jpg" />
-	<e:Image  id="btnStart" horizontalCenter="0" verticalCenter="0"  source="btnStart_png"/>
+<e:Skin width="750" height="1206" class="skins.LaunchSkin" xmlns:e="http://ns.egret.com/eui">
 </e:Skin>

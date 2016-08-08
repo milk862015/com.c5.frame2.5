@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<e:Skin width="750" height="1208"  class="skins.LoadViewSkin" xmlns:e="http://ns.egret.com/eui">
+<e:Skin width="750" height="1206"  class="skins.LoadViewSkin" xmlns:e="http://ns.egret.com/eui">
 <e:Label id="loadProgress" horizontalCenter="0" verticalCenter="0" size="30" textColor="0xFFFFFF" text="Loading...0%" >
 </e:Label>
 </e:Skin>

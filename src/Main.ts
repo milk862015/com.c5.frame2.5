@@ -16,7 +16,7 @@ class Main extends eui.UILayer {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE,this.onConfigComplete,this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.onResourceLoadComplete,this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.onResourceProgress,this);
-        RES.loadGroup("loadRes");
+        RES.loadGroup("LoadViewSkin");
 
         if( typeof RES["configInstance"]["groupDic"] != "undefined" ){
             this.loadArr = [];
@@ -33,7 +33,7 @@ class Main extends eui.UILayer {
     }
 
     private onResourceLoadComplete( e:RES.ResourceEvent ):void{
-        if( e.groupName == "loadRes" ){
+        if( e.groupName == "LoadViewSkin" ){
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.onResourceLoadComplete,this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.onResourceProgress,this);
             this.createScene();
@@ -45,10 +45,10 @@ class Main extends eui.UILayer {
     }
 
     private onLoadGroupCompleteHandler(e:GameEvent):void{
-        var groupName:string = <string>e.data;
-        if( groupName == "LaunchSkin" ){
-            this.startShow();
-        }
+        // var groupName:string = <string>e.data;
+        // if( groupName == "LaunchSkin" ){
+        //     this.startShow();
+        // }
     }
 
     private onLoadCompleteHandler(e:GameEvent):void{
@@ -59,11 +59,7 @@ class Main extends eui.UILayer {
         gr.removeEventListener(GameEvent.LOAD_PROGRESS,this.onLoadGroupCompleteHandler,this);
         gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
         //DragonBonesManage.Initialize();
-        if( debug.IsDebug  ){
-            gr.Debug();
-        }else{
-            gr.Launch();
-        }
+        gr.Launch();
     }
 
     private createScene():void{
