@@ -41,7 +41,14 @@ class SkinPanel extends eui.Panel{
         this.removeEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStageHandler,this);
 
         this.addEventListener(egret.Event.REMOVED_FROM_STAGE,this.onRemoveFromStageHandler,this);
+        this.registerListener(Core.Stage,egret.Event.RESIZE,this.onResizeHandler,this);
+        this.onResizeHandler(null);
         this.onAdd();
+    }
+
+    private onResizeHandler(e:egret.Event):void{
+        this.width = Core.Stage.stageWidth;
+        this.height = Core.Stage.stageHeight;
     }
 
     protected onAdd():void{
