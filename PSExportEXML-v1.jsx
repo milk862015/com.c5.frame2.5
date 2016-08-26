@@ -84,14 +84,18 @@ function init () {
    
 	var dir = app.activeDocument.path + "/../resource/";
     var res = app.activeDocument.path + "/../res/";
+	
     var bgDir = dir + "bg/";
+	var res_ui = dir + "ui/"
     var skinDir = dir + "skins/";
     new Folder(dir).create();
     new Folder(res).create();
+	new Folder(res_ui).create();
     new Folder(bgDir).create();
     new Folder(skinDir).create();
     if(savePNGs){
         new Folder(res + name +"/" ).create();
+		new Folder(res_ui + name +"/" ).create();
     }
 
 	app.activeDocument.duplicate();
@@ -136,6 +140,7 @@ function init () {
 			if (savePNGs && ( ln.indexOf(".png") != -1 || ln.indexOf(".jpg") != -1 )) {              
                   if (scaleImage != 1) scaleImages();                  
                   var file;
+				  var file_ui;
                   
                     var option = new ExportOptionsSaveForWeb();
                     var isCreate = false;
@@ -145,12 +150,15 @@ function init () {
                   
                   if(  ln.indexOf (".png") != -1 ){
                         file = File(res + name +"/" + ln );
+						file_ui = File(res_ui + name +"/" + ln );
                         if (file.exists) file.remove();
+						if(file_ui.exists) file_ui.remove();
                         option.format = SaveDocumentType.PNG;
                         option.PNG8 = false; 
     					option.interlaced = false; 
                         //设置图片输出时支持透明度。
                         option.transparency = true;
+						app.activeDocument.exportDocument (file_ui, ExportType.SAVEFORWEB, option)
                   }else if(ln.indexOf (".jpg") != -1){
                       file = File( bgDir + ln );
                        if (file.exists) file.remove();
