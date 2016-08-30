@@ -21,7 +21,7 @@ class Main extends eui.UILayer {
         if( typeof RES["configInstance"]["groupDic"] != "undefined" ){
             this.loadArr = [];
             for( var key in RES["configInstance"]["groupDic"] ){
-                if( key != "loadRes" ){
+                if( key != "LoadViewSkin" && key != "music" ){
                     this.loadArr.unshift(key);
                 }
             }
@@ -40,7 +40,7 @@ class Main extends eui.UILayer {
             gr.addEventListener(GameEvent.LOAD_GROUP_COMPLETE,this.onLoadGroupCompleteHandler,this);
             gr.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
             LoadManage.Initialize();
-            LoadManage.StartLoad(this.loadArr,null);
+            LoadManage.StartLoad(this.loadArr,LoadViewSkin);
         }
     }
 
@@ -59,6 +59,15 @@ class Main extends eui.UILayer {
         gr.removeEventListener(GameEvent.LOAD_PROGRESS,this.onLoadGroupCompleteHandler,this);
         gr.removeEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
         //DragonBonesManage.Initialize();
+        gr.addEventListener(GameEvent.START,this.onStartHandler,this);
+        gb.IsGameReady = true;
+        if( debug.IsDebug || gb.IsServerReady ){
+            gr.Start();
+        }
+    }
+
+    protected onStartHandler( e:GameEvent ):void{
+        gr.removeEventListener(GameEvent.START,this.onStartHandler,this);
         gr.Launch();
     }
 

@@ -41,6 +41,10 @@ module gr {
     export function Debug():void{
         instance.sendEvent(GameEvent.DEBUG);
     }
+
+    export function Start():void{
+        instance.sendEvent(GameEvent.START);
+    }
   
 //-------这里自动添加代码分割线-------
 

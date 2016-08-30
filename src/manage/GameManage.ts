@@ -16,7 +16,7 @@ module GameManage{
             //[事件，打开界面前的触发函数，打开界面方式(0 UI显示 1 弹窗),要被打开的界面类,打开模式mode,打开界面后的触发函数]
             this.lst = [
                 [GameEvent.LAUNCH,null,GameSys.UI_NORMAL,LaunchSkin,1,null],
-                [GameEvent.DEBUG,null,GameSys.UI_NORMAL,DebugSkin,1,null]
+                [GameEvent.DEBUG,null,GameSys.UI_NORMAL,DebugSkin,1,null],
 //-------这里自动添加代码分割线-------
             ];
             var count:number = this.lst.length;

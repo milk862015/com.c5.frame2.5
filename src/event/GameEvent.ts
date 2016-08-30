@@ -6,6 +6,8 @@ class GameEvent extends egret.Event{
     static DEBUG:string = "debug";
 //-------这里自动添加代码分割线-------
 
+    static START:string = "start";
+
     static LOAD_PROGRESS:string = "load_progress";
     static LOAD_COMPETE:string = "load_complete";
     static LOAD_GROUP_COMPLETE:string = "load_group_complete";
