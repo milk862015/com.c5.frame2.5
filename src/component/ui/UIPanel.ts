@@ -14,6 +14,10 @@ class UIPanel extends SkinPanel{
         var ta:egret.DisplayObject = <egret.DisplayObject>instance;
         this.uiLst[partName] = ta;
     }
+	
+	protected initView():void{
+	
+	}
 
     protected configHandler():void{
 
@@ -29,6 +33,7 @@ class UIPanel extends SkinPanel{
 
     protected onAdd():void{
         this.initData();
+		this.initView();
         this.configHandler();
         this.updateView();
         this.addHandler();
