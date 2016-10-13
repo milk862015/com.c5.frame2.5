@@ -8,6 +8,7 @@ class PopUpLayer extends eui.Group{
     static ReadyAlpha:number;
     static ReadyClassName:string;
     static ReadyEffect:number;
+    static ReadyParams:any;
 
     private pLst:PopUpUnit[];
     constructor(){
@@ -19,7 +20,7 @@ class PopUpLayer extends eui.Group{
         this.pLst = [];
     }
 
-    public AddPopUp(classFactory:any,effect?:number,alpha?:number):any{
+    public AddPopUp(classFactory:any,effect?:number,alpha?:number,params?:any):any{
         if( effect === void 0 ){effect = 1}
         if(alpha == void 0){alpha = PopUpLayer.ModalAlpha}
 
@@ -41,6 +42,7 @@ class PopUpLayer extends eui.Group{
 
         if( RES.isGroupLoaded(className) == false){
             PopUpLayer.ReadyClassName = className;
+            PopUpLayer.ReadyParams = params;
             gr.addEventListener(GameEvent.LOAD_COMPETE,this.onLoadCompleteHandler,this);
             gr.addEventListener(GameEvent.LOAD_PROGRESS,this.onProgressHandler,this);
 
@@ -53,7 +55,7 @@ class PopUpLayer extends eui.Group{
             return false
         }else{
             this.startClear();
-            return this.showPopUp(classFactory,effect,alpha);
+            return this.showPopUp(classFactory,effect,alpha,params);
         }
     }
 
@@ -76,7 +78,7 @@ class PopUpLayer extends eui.Group{
 
     private startShow():void{
         if( PopUpLayer.ReadyClassFactory ){
-            this.showPopUp(PopUpLayer.ReadyClassFactory,PopUpLayer.ReadyEffect,PopUpLayer.ReadyAlpha);
+            this.showPopUp(PopUpLayer.ReadyClassFactory,PopUpLayer.ReadyEffect,PopUpLayer.ReadyAlpha,PopUpLayer.ReadyParams);
         }
         Core.LoadLayer.CloseMinLoading();
 
@@ -84,11 +86,17 @@ class PopUpLayer extends eui.Group{
         PopUpLayer.ReadyEffect = 0;
         PopUpLayer.ReadyAlpha = 0;
         PopUpLayer.ReadyClassName = null;
+        PopUpLayer.ReadyParams = null;
     }
 
-    private showPopUp(classFactory:any,effect:number,alpha:number):PopUpUnit{
+    private showPopUp(classFactory:any,effect:number,alpha:number,params?:any):PopUpUnit{
         var pu:PopUpUnit = new PopUpUnit(alpha);
-        var target:any = new classFactory();
+        var target:any;
+        if( params == void 0 ){
+            target = new classFactory();
+        }else{
+            target = new classFactory(params);
+        }
         target["anchorOffsetX"] = Core.Stage.stageWidth * 0.5;
         target["anchorOffsetY"] = Core.Stage.stageHeight * 0.5;
         target["x"] = Core.Stage.stageWidth * 0.5;

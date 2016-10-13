@@ -41,9 +41,19 @@ module GameManage{
 
                     //显示界面
                     if( arr[2] == 0 && arr[3] != null ){
-                        Core.UILayer.Show(arr[3],arr[4]);
+                        if( e.data == void 0 ){
+                            Core.UILayer.Show(arr[3],arr[4]);
+                        }else{
+                            Core.UILayer.Show(arr[3],arr[4],e.data);
+                        }
+
                     }else if( arr[2] == 1 && arr[3] != null ){
-                        Core.PopUpLayer.AddPopUp(arr[3],arr[4]);
+                        if( e.data == void 0 ){
+                            Core.PopUpLayer.AddPopUp(arr[3],arr[4]);
+                        }else{
+                            Core.PopUpLayer.AddPopUp(arr[3],arr[4],void 0,e.data);
+                        }
+
                     }
 
                     if(arr[5] != null && typeof arr[5] == "function"){

@@ -12,6 +12,7 @@ class  UILayer extends eui.Group{
     static ReadyClassFactory:any;
     static ReadyMode:number;
     static ReadyClassName:string;
+    static ReadyParams:any;
 
     private curClass:any;
     constructor(){
@@ -27,7 +28,7 @@ class  UILayer extends eui.Group{
     }
 
 
-    public Show(classFactory:any,mode?:number):void{
+    public Show(classFactory:any,mode?:number,params?:any):void{
         if( mode === void 0 ){mode = 1}
         if( this.curClass == classFactory ){
             return;
@@ -45,11 +46,12 @@ class  UILayer extends eui.Group{
             UILayer.ReadyClassFactory = classFactory;
             UILayer.ReadyMode = mode;
             UILayer.ReadyClassName = className;
+            UILayer.ReadyParams = params;
             LoadManage.StartLoad([className],null);
             Core.LoadLayer.ShowMinLoading();
         }else{
             this.startClear();
-            this.startShow(classFactory,mode);
+            this.startShow(classFactory,mode,params);
         }
     }
 
@@ -66,7 +68,7 @@ class  UILayer extends eui.Group{
 
     private startClear():void{
         if( UILayer.ReadyClassFactory ){
-            this.startShow(UILayer.ReadyClassFactory,UILayer.ReadyMode);
+            this.startShow(UILayer.ReadyClassFactory,UILayer.ReadyMode,UILayer.ReadyParams);
         }
 
         Core.LoadLayer.CloseMinLoading();
@@ -75,16 +77,21 @@ class  UILayer extends eui.Group{
         UILayer.ReadyClassFactory = null;
         UILayer.ReadyMode = null;
         UILayer.ReadyClassName = null;
+        UILayer.ReadyParams = null;
     }
 
 
-    private startShow(classFactory:any,mode:number):void{
+    private startShow(classFactory:any,mode:number,params?:any):void{
         if( this.curShow ){
             this.lastShow = this.curShow;
         }
         this.curClass = classFactory;
         if(classFactory != null ){
-            this.curShow = new classFactory();
+            if( params == void 0 ){
+                this.curShow = new classFactory();
+            }else{
+                this.curShow = new classFactory(params);
+            }
         }
 
 
