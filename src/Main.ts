@@ -1,8 +1,12 @@
 class Main extends eui.UILayer {
     private loadArr:string[] = [];
     protected createChildren(): void {
-        //注入自定义的素材解释器
-        this.stage.registerImplementation("eui.IAssetAdapter",new AssetAdapter());
+        //inject the custom material parser
+        //注入自定义的素材解析器
+        var assetAdapter = new AssetAdapter();
+        egret.registerImplementation("eui.IAssetAdapter",assetAdapter);
+        egret.registerImplementation("eui.IThemeAdapter",new ThemeAdapter());
+
         HttpNet.Initialize();
         super.createChildren();
         //var theme = new eui.Theme("resource/default.thm.json", this.stage);

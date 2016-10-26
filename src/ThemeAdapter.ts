@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  Copyright (c) 2014-present, Egret Technology.
 //  All rights reserved.
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -42,7 +42,7 @@ class ThemeAdapter implements eui.IThemeAdapter {
             compFunc.call(thisObject, e);
         }
         function onError(e:RES.ResourceEvent):void {
-            if(e.resItem["url"] == url) {
+            if(e.resItem.url == url) {
                 RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, onError, null);
                 errorFunc.call(thisObject);
             }
