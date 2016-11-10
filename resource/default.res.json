@@ -1,8 +1,14 @@
 {
-	"groups":[{
+	"groups":[
+		{
 			"keys":"LoadViewSkin_exml,load_min_num_fnt,black_jpg,LoadMinViewSkin_exml",
 			"name":"LoadViewSkin"
-		}],
+		},
+		{
+			"keys":"AlertSkin_exml,alertBg_png",
+			"name":"AlertSkin"
+		}
+	],
 	"resources":[
 		{
 			"name":"LoadViewSkin_exml",
@@ -28,6 +34,16 @@
 			"name":"LoadMinViewSkin_exml",
 			"type":"exml",
 			"url":"skins/LoadMinViewSkin.exml"
+		},
+		{
+			"name":"AlertSkin_exml",
+			"type":"exml",
+			"url":"skins/AlertSkin.exml"
+		},
+		{
+			"name":"alertBg_png",
+			"type":"image",
+			"url":"bg/alertBg.png"
 		}
 	]
 }

@@ -17,6 +17,7 @@ module GameManage{
             this.lst = [
                 [GameEvent.LAUNCH,null,GameSys.UI_NORMAL,LaunchSkin,1,null],
                 [GameEvent.DEBUG,null,GameSys.UI_NORMAL,DebugSkin,1,null],
+                [GameEvent.ALERT,null,GameSys.UI_POP_UP,null,1,null],
 //-------这里自动添加代码分割线-------
             ];
             var count:number = this.lst.length;

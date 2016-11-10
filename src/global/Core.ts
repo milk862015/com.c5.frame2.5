@@ -18,4 +18,6 @@ class Core {
     static PopUpLayer:PopUpLayer;
 
     static LoadLayer:LoadLayer;
+
+    static AlertLayer:AlertLayer;
 }

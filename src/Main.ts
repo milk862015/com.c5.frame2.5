@@ -93,6 +93,9 @@ class Main extends eui.UILayer {
         Core.LoadLayer = new LoadLayer();
         this.addChild(Core.LoadLayer);
 
+        Core.AlertLayer = new AlertLayer();
+        this.addChild(Core.AlertLayer);
+
 
         Core.UILayer.SetLoadView(LoadViewSkin);
 
