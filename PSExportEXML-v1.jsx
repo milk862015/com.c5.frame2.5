@@ -181,9 +181,9 @@ function init () {
 			}
 			layer.visible = false;
            if( ln.indexOf(".png") != -1 ){
-                    exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x +'\" y=\"'+ y +'\"/>'
+                    exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x.toFixed(0) +'\" y=\"'+ y.toFixed(0) +'\"/>'
            }else if( ln.indexOf(".jpg") != -1  ){
-                    exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x +'\" y=\"'+ y +'\"/>'
+                    exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x.toFixed(0) +'\" y=\"'+ y.toFixed(0) +'\"/>'
            }
             
 		}
