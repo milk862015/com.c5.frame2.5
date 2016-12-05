@@ -45,6 +45,10 @@ module gr {
     export function Start():void{
         instance.sendEvent(GameEvent.START);
     }
+
+    export function UpdateTime():void{
+        instance.sendEvent(GameEvent.UPDATE_TIME);
+    }
   
 //-------这里自动添加代码分割线-------
 

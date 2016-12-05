@@ -12,6 +12,7 @@
     "resource/eui_skins/ToggleSwitchSkin.exml",
     "resource/eui_skins/VScrollBarSkin.exml",
     "resource/eui_skins/VSliderSkin.exml",
+    "resource/skins/AlertSkin.exml",
     "resource/skins/LaunchSkin.exml",
     "resource/skins/LoadMinViewSkin.exml",
     "resource/skins/LoadViewSkin.exml"

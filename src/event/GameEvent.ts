@@ -4,9 +4,14 @@
 class GameEvent extends egret.Event{
     static LAUNCH:string = "launch";
     static DEBUG:string = "debug";
+
+    static ALERT:string = "alert";
+
 //-------这里自动添加代码分割线-------
 
     static START:string = "start";
+
+    static UPDATE_TIME:string = "update_time";
 
     static LOAD_PROGRESS:string = "load_progress";
     static LOAD_COMPETE:string = "load_complete";
