@@ -3,6 +3,7 @@ var ignoreHiddenLayers = true;
 var savePNGs = true;
 var saveEXML = true;
 var scaleImage = 1;
+var useHorizontalCenterAndTop = false;
 alertDialog();
 
 /**alert control panel**/
@@ -26,6 +27,11 @@ function alertDialog () {
 	dialog.ignoreHiddenLayers.alignment = "left";
 	dialog.ignoreHiddenLayers.value = ignoreHiddenLayers;
 
+	dialog.useHorizontalCenterAndTop = dialog.add("checkbox", undefined, "Use HorizontalCenterAndTop")
+	dialog.useHorizontalCenterAndTop.alignment = "left";
+	dialog.useHorizontalCenterAndTop.value = useHorizontalCenterAndTop;
+
+
 	var scaleGroup = dialog.add("panel", [0, 0, 180, 50], "Image Scale");
 	var scaleText = scaleGroup.add("edittext", [10,10,40,30], scaleImage * 100); 
 	scaleGroup.add("statictext", [45, 12, 100, 20], "%");
@@ -48,6 +54,7 @@ function alertDialog () {
 		savePNGs = dialog.savePNGs.value;
 		saveEXML = dialog.saveEXML.value;
 		ignoreHiddenLayers = dialog.ignoreHiddenLayers.value;
+		useHorizontalCenterAndTop = dialog.useHorizontalCenterAndTop.value;
 		scaleImage = scaleSlider.value / 100;
 		init();
 		this.parent.close(0);
@@ -180,10 +187,22 @@ function init () {
                 //}
 			}
 			layer.visible = false;
+			var mid = stageWidth * 0.5;
+			var hx = x + width * 0.5 -mid;
            if( ln.indexOf(".png") != -1 ){
-                    exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x.toFixed(0) +'\" y=\"'+ y.toFixed(0) +'\"/>'
+           			if(useHorizontalCenterAndTop){
+           				exml += '\n     <e:Image source=\"' + layerName[i] +'\" horizontalCenter=\"'+ hx.toFixed(0) +'\" top=\"'+ y.toFixed(0) +'\"/>'
+           			}else{
+           				exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x.toFixed(0) +'\" y=\"'+ y.toFixed(0) +'\"/>'
+           			}
+                    
            }else if( ln.indexOf(".jpg") != -1  ){
-                    exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x.toFixed(0) +'\" y=\"'+ y.toFixed(0) +'\"/>'
+           			if(useHorizontalCenterAndTop){
+           				exml += '\n     <e:Image source=\"' + layerName[i] +'\" horizontalCenter=\"'+ hx.toFixed(0) +'\" top=\"'+ y.toFixed(0) +'\"/>'	
+           			}else{
+           				exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x.toFixed(0) +'\" y=\"'+ y.toFixed(0) +'\"/>'	
+           			}
+                    
            }
             
 		}
