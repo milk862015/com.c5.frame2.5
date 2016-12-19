@@ -2,14 +2,16 @@
  * Created by milk on 2016/11/28.
  */
 var fs = require('fs');
-var path = "../../../resource";
+var path = "../../resource";
 
 var tinify = require("tinify");
-tinify.key = "";//填写key；
 var totalCount = 0;
 
-if( tinify.key == "" ){
-    console.log("请先填写key");
+if(process.argv.length > 2){
+    console.log("process.argv[2]:",process.argv[2]);
+    tinify.key = process.argv[2];
+}else{
+    console.log("请在命令行 填写key参数");
     return;
 }
 
