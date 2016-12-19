@@ -1,4 +1,5 @@
-class {{.}} extends UIPanel{
+class {{.className}} extends UIPanel{
+    {{.valueVar}}
     constructor(){
         super();
     }
@@ -8,10 +9,16 @@ class {{.}} extends UIPanel{
 	}
 
     protected configHandler():void{
-        
+        {{.listenValue}}
     }
 
+    {{.funcValue}}
+
     protected updateView():void{
+
+    }
+
+    protected onRemove():void{
 
     }
 }
