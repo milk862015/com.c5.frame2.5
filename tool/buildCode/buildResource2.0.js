@@ -82,7 +82,7 @@ function addInfoHandler(){
 
         for( var key in addInfo ){
             console.log("key:",key);
-            var item;
+            var item = undefined;
             //从group获取要被添加的位置
             for( var g in gLst ){
                 var info = gLst[g];
