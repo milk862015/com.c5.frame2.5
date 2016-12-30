@@ -3,4 +3,4 @@
  */
 var gb = {};
 gb.IsGameReady = true;
-gb.IsSeverReady = true;
+gb.IsServiceReady = true;

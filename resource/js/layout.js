@@ -1,24 +1,19 @@
-/**
- * Created by Administrator on 2015/6/2.
- */
-/**
- * Created by Administrator on 2015/5/12.
- */
-
 LayoutSys = {};
-LayoutSys.screenW = 750;
-LayoutSys.screenH = 1208;
 LayoutSys.scale = 0;
 LayoutSys.scaleX = 0;
 LayoutSys.scaleY = 0;
 LayoutSys.IsFirstShow = true;
 
 LayoutSys.imgInfo = {
-    "ew":{"width":264,"height":264,"left":45,"top":372}
+    "ew":{"width":264,"height":264,"left":45,"top":372},
+    "big_ew":{"width":264,"height":264,"left":45,"top":372},
+    "shengSelect":{"width":111,"height":191,"left":183,"top":241,"opacity":0},
+    "shiSelect":{"width":111,"height":191,"left":331,"top":241,"opacity":0},
+    "quSelect":{"width":111,"height":191,"left":476,"top":241,"opacity":0}
 };
 
 LayoutSys.Show = function(){
-    var imgLst = ["ew"];
+    var imgLst = ["ew","big_ew"];
     var div = document.getElementById("StageDelegateDiv");
     var dd = document.createElement("div");
     dd.style.position = "absolute";
@@ -31,10 +26,15 @@ LayoutSys.Show = function(){
         img.style.display = "none";
         img.style.position = "absolute";
         if( id == "ew" ){
-            img.src = "resource/ui/ew.png";
+            // img.src = "resource/ui/EWSkin/ew.png";
+        }else if( id == "big_ew" ){
+            // img.src = "resource/ui/SureSkin/sure_ew.png";
+            // img.src = "";
         }
         div.appendChild(img);
     }
+
+    LayoutSys.createSelect(dd);
 
     for(var key in LayoutSys.imgInfo){
         var tg = document.getElementById(key);
@@ -42,15 +42,45 @@ LayoutSys.Show = function(){
             LayoutSys.setStyleAuto(tg,pr,LayoutSys.imgInfo[key][pr]);
         }
     }
+
+
 };
-LayoutSys.Init = function(){
+
+LayoutSys.createSelect = function(div){
+    //选择项目
+    var selectLst = ["shengSelect","shiSelect","quSelect"];
+
+    for( var j in selectLst ){
+        var key = selectLst[j];
+        var select = document.createElement("select");
+        select.style.position = "absolute";
+        select.style.display = "none";
+        select.id = key;
+        div.appendChild(select);
+    }
+};
+
+LayoutSys.InitFixedHeight = function(){
     LayoutSys.curClientWidth = document.documentElement.offsetWidth;
     LayoutSys.curClinetHeight = document.documentElement.offsetHeight;
 
     LayoutSys.canvas = document.getElementsByTagName("canvas")[0];
+    var div = LayoutSys.canvas.parentElement;
+    var screenH = parseInt(div.dataset.contentHeight)
+    LayoutSys.scaleY = LayoutSys.canvas.offsetHeight/screenH;
+    LayoutSys.scaleX = LayoutSys.scaleY;
+};
 
-    LayoutSys.scaleX = LayoutSys.canvas.offsetWidth/LayoutSys.screenW;
-    LayoutSys.scaleY = LayoutSys.canvas.offsetHeight/LayoutSys.screenH;
+LayoutSys.InitFixedWidth = function(){
+    LayoutSys.curClientWidth = document.documentElement.offsetWidth;
+    LayoutSys.curClinetHeight = document.documentElement.offsetHeight;
+
+    LayoutSys.canvas = document.getElementsByTagName("canvas")[0];
+    var div = LayoutSys.canvas.parentElement;
+    var screenW = parseInt(div.dataset.contentWidth)
+
+    LayoutSys.scaleX = LayoutSys.canvas.offsetWidth/screenW;
+    LayoutSys.scaleY = LayoutSys.scaleX;
 };
 
 
@@ -95,7 +125,13 @@ LayoutSys.getCurW = function(base){
 };
 
 LayoutSys.setStyle = function( target,pr,value ){
-    target.style[pr] = value + "px";
+    var v;
+    if( pr == "opacity" ){
+        v = value;
+    }else{
+        v = value + "px";
+    }
+    target.style[pr] = v;
 };
 
 LayoutSys.ShowEW = function(x,y,w,h){
@@ -110,6 +146,7 @@ LayoutSys.ShowEW = function(x,y,w,h){
 
         //img.src = "resource/ui/ew.png";
         img.style.display = "block";
+        // img.style.opacity = 0;
     }
 };
 
@@ -122,6 +159,29 @@ LayoutSys.OnlyShowEW = function(){
 
 LayoutSys.CloseEW = function(){
     var img = document.getElementById("ew");
+    if( img != void 0){
+        img.style.display = "none";
+    }
+};
+
+LayoutSys.ShowBigEW = function(x,y,w,h){
+    var img = document.getElementById("big_ew");
+    if( typeof img != void 0 ){
+        if( typeof x != void 0){
+            LayoutSys.setStyleAuto(img,"left",x);
+            LayoutSys.setStyleAuto(img,"top",y);
+            LayoutSys.setStyleAuto(img,"width",w);
+            LayoutSys.setStyleAuto(img,"height",h);
+        }
+
+        //img.src = "resource/ui/ew.png";
+        img.style.display = "block";
+        // img.style.opacity = 0;
+    }
+};
+
+LayoutSys.CloseBigEW = function(){
+    var img = document.getElementById("big_ew");
     if( img != void 0){
         img.style.display = "none";
     }

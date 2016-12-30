@@ -15,7 +15,7 @@ function alertDialog () {
 
 	var dialog = new Window("dialog", "Export");
 
-	dialog.savePNGs = dialog.add("checkbox", undefined, "Export Images"); 
+	dialog.savePNGs = dialog.add("checkbox", undefined, "Export Images");
 	dialog.savePNGs.value = savePNGs;
 	dialog.savePNGs.alignment = "left";
 
@@ -33,7 +33,7 @@ function alertDialog () {
 
 
 	var scaleGroup = dialog.add("panel", [0, 0, 180, 50], "Image Scale");
-	var scaleText = scaleGroup.add("edittext", [10,10,40,30], scaleImage * 100); 
+	var scaleText = scaleGroup.add("edittext", [10,10,40,30], scaleImage * 100);
 	scaleGroup.add("statictext", [45, 12, 100, 20], "%");
 	var scaleSlider = scaleGroup.add("slider", [60, 10,165,20], scaleImage * 100, 1, 100);
 	scaleText.onChanging = function() {
@@ -49,7 +49,7 @@ function alertDialog () {
 	var confirmGroup = dialog.add("group", [0, 0, 180, 50]);
 	var okButton = confirmGroup.add("button", [10, 10, 80, 35], "Ok");
 	var cancelButton = confirmGroup.add("button", [90, 10, 170, 35], "Cancel");
-    
+
     okButton.onClick = function() {
 		savePNGs = dialog.savePNGs.value;
 		saveEXML = dialog.saveEXML.value;
@@ -62,11 +62,11 @@ function alertDialog () {
 	};
 
 	cancelButton.onClick = function() {
-        this.parent.close(0); 
+        this.parent.close(0);
         //this.parent.remove();
-        return; 
+        return;
     };
-	
+
 
 	dialog.orientation = "column";
 	dialog.center();
@@ -88,10 +88,10 @@ function init () {
     var stageHeight = app.activeDocument.height.as("px") * scaleImage;
     var name = decodeURI(app.activeDocument.name);//文件名字
 	name = name.substring(0, name.indexOf("."));
-   
+
 	var dir = app.activeDocument.path + "/../resource/";
     var res = app.activeDocument.path + "/../res/";
-	
+
     var bgDir = dir + "bg/";
 	var res_ui = dir + "ui/"
     var skinDir = dir + "skins/";
@@ -109,7 +109,7 @@ function init () {
 
 	var layers = [];
 	getLayers(app.activeDocument, layers);
-    
+
 	var layerCount = layers.length;
 	var layerVisibility = {};
     var layerName = [];
@@ -127,7 +127,7 @@ function init () {
 		exml += '<e:Skin class=\"skins.' + name  + '\" '  +  ' width=\"'+ stageWidth +'\" height=\"'+ stageHeight +'\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\">'
 		for (var i = layerCount - 1; i >= 0; i--) {
 			var layer = layers[i];
-			
+
 			if (ignoreHiddenLayers && !layerVisibility[layer]) continue;
 			//屏幕坐标系是左上角的
 			var x = app.activeDocument.width.as("px") * scaleImage;
@@ -139,35 +139,35 @@ function init () {
 			if (!layer.isBackgroundLayer)
 				app.activeDocument.trim(TrimType.TRANSPARENT, true, false, false, true);
 			var width = app.activeDocument.width.as("px") * scaleImage;
-			var height = app.activeDocument.height.as("px") * scaleImage; 
+			var height = app.activeDocument.height.as("px") * scaleImage;
 			y -= height;
 			// Save image.
              var ln = layerName[i].replace("_png",".png");
              ln = ln.replace("_jpg",".jpg");
-			if (savePNGs && ( ln.indexOf(".png") != -1 || ln.indexOf(".jpg") != -1 )) {              
-                  if (scaleImage != 1) scaleImages();                  
+			if (savePNGs && ( ln.indexOf(".png") != -1 || ln.indexOf(".jpg") != -1 )) {
+                  if (scaleImage != 1) scaleImages();
                   var file;
 				  var file_ui;
-                  
+
                     var option = new ExportOptionsSaveForWeb();
                     var isCreate = false;
                     //设置图片输出的色彩范围为256色。
                     option.colors = 256;
                     option.quality = 100;
-                  
+
                   if(  ln.indexOf (".png") != -1 ){
                         file = File(res + name +"/" + ln );
 						file_ui = File(res_ui + name +"/" + ln );
                         if (file.exists) file.remove();
 						if(file_ui.exists) file_ui.remove();
                         option.format = SaveDocumentType.PNG;
-                        option.PNG8 = false; 
-    					option.interlaced = false; 
+                        option.PNG8 = false;
+    					option.interlaced = false;
                         //设置图片输出时支持透明度。
                         option.transparency = true;
 						app.activeDocument.exportDocument (file_ui, ExportType.SAVEFORWEB, option)
                   }else if(ln.indexOf (".jpg") != -1){
-                      file = File( bgDir + ln );
+                      file = File( res_ui + name + "/" + ln );
                        if (file.exists) file.remove();
                       option.format = SaveDocumentType.JPEG;
                         //设置图片输出时支持透明度。
@@ -175,7 +175,7 @@ function init () {
                   }
                   app.activeDocument.exportDocument (file, ExportType.SAVEFORWEB, option)
                   //activeDocument.saveAs(file, new PNGSaveOptions(), true, Extension.LOWERCASE);
-                  if (scaleImage != 1) stepHistoryBack();                
+                  if (scaleImage != 1) stepHistoryBack();
 			}
 			if (!layer.isBackgroundLayer) {
                 //if(width != stageWidth || height != stageHeight){
@@ -195,16 +195,16 @@ function init () {
            			}else{
            				exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x.toFixed(0) +'\" y=\"'+ y.toFixed(0) +'\"/>'
            			}
-                    
+
            }else if( ln.indexOf(".jpg") != -1  ){
            			if(useHorizontalCenterAndTop){
-           				exml += '\n     <e:Image source=\"' + layerName[i] +'\" horizontalCenter=\"'+ hx.toFixed(0) +'\" top=\"'+ y.toFixed(0) +'\"/>'	
+           				exml += '\n     <e:Image source=\"' + layerName[i] +'\" horizontalCenter=\"'+ hx.toFixed(0) +'\" top=\"'+ y.toFixed(0) +'\"/>'
            			}else{
-           				exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x.toFixed(0) +'\" y=\"'+ y.toFixed(0) +'\"/>'	
+           				exml += '\n     <e:Image source=\"' + layerName[i] +'\" x=\"'+ x.toFixed(0) +'\" y=\"'+ y.toFixed(0) +'\"/>'
            			}
-                    
+
            }
-            
+
 		}
 
 
@@ -268,7 +268,6 @@ function trim (value) {
 
 function hasFilePath() {
 	var reference = new ActionReference();
-	reference.putEnumerated( charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") ); 
+	reference.putEnumerated( charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );
 	return executeActionGet(reference).hasKey(stringIDToTypeID('fileReference'));
 }
-
