@@ -90,20 +90,16 @@ function init () {
 	name = name.substring(0, name.indexOf("."));
 
 	var dir = app.activeDocument.path + "/../resource/";
-    var res = app.activeDocument.path + "/../res/";
 
-    var bgDir = dir + "bg/";
 	var res_ui = dir + "ui/"
     var skinDir = dir + "skins/";
     new Folder(dir).create();
-    new Folder(res).create();
-	new Folder(res_ui).create();
-    new Folder(bgDir).create();
     new Folder(skinDir).create();
     if(savePNGs){
-        new Folder(res + name +"/" ).create();
+    	new Folder(res_ui).create();
 		new Folder(res_ui + name +"/" ).create();
     }
+
 
 	app.activeDocument.duplicate();
 
@@ -145,9 +141,9 @@ function init () {
              var ln = layerName[i].replace("_png",".png");
              ln = ln.replace("_jpg",".jpg");
 			if (savePNGs && ( ln.indexOf(".png") != -1 || ln.indexOf(".jpg") != -1 )) {
-                  if (scaleImage != 1) scaleImages();
-                  var file;
-				  var file_ui;
+                  	if (scaleImage != 1) scaleImages();
+                  	var file;
+				  	var file_ui;
 
                     var option = new ExportOptionsSaveForWeb();
                     var isCreate = false;
@@ -155,27 +151,23 @@ function init () {
                     option.colors = 256;
                     option.quality = 100;
 
-                  if(  ln.indexOf (".png") != -1 ){
-                        file = File(res + name +"/" + ln );
+                 	if(ln.indexOf (".png") != -1 || ln.indexOf (".jpg") != -1){
 						file_ui = File(res_ui + name +"/" + ln );
-                        if (file.exists) file.remove();
+                        
 						if(file_ui.exists) file_ui.remove();
-                        option.format = SaveDocumentType.PNG;
+						if( ln.indexOf(".png") != -1 ){
+							option.format = SaveDocumentType.PNG;
+						}else{
+							option.format = SaveDocumentType.JPEG;	
+						}
+                        
                         option.PNG8 = false;
     					option.interlaced = false;
                         //设置图片输出时支持透明度。
                         option.transparency = true;
 						app.activeDocument.exportDocument (file_ui, ExportType.SAVEFORWEB, option)
-                  }else if(ln.indexOf (".jpg") != -1){
-                      file = File( res_ui + name + "/" + ln );
-                       if (file.exists) file.remove();
-                      option.format = SaveDocumentType.JPEG;
-                        //设置图片输出时支持透明度。
-                        option.transparency = false;
-                  }
-                  app.activeDocument.exportDocument (file, ExportType.SAVEFORWEB, option)
-                  //activeDocument.saveAs(file, new PNGSaveOptions(), true, Extension.LOWERCASE);
-                  if (scaleImage != 1) stepHistoryBack();
+                  	}    
+                 	if (scaleImage != 1) stepHistoryBack();
 			}
 			if (!layer.isBackgroundLayer) {
                 //if(width != stageWidth || height != stageHeight){

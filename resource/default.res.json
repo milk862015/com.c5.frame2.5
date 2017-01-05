@@ -43,7 +43,7 @@
 		{
 			"name":"alertBg_png",
 			"type":"image",
-			"url":"bg/alertBg.png"
+			"url":"ui/alertBg.png"
 		}
 	]
 }
