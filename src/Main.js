@@ -79,7 +79,6 @@ var Main = (function (_super) {
     };
     Main.prototype.onStartHandler = function (e) {
         gr.removeEventListener(GameEvent.START, this.onStartHandler, this);
-        gr.Launch();
     };
     Main.prototype.createScene = function () {
         Core.Stage = this.stage;

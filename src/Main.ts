@@ -90,7 +90,7 @@ class Main extends eui.UILayer {
 
     protected onStartHandler(e: GameEvent): void {
         gr.removeEventListener(GameEvent.START, this.onStartHandler, this);
-        gr.Launch();
+        // gr.Launch();
     }
 
     private createScene(): void {
