@@ -14,14 +14,22 @@ function explorer(path) {
            return;
        }
 
-       files.forEach(function(file){
-           var arr = file.split(".");
-           if( arr.length == 2 && arr[1] == skinsExtension ){
-               console.log("arr[0]:",arr[0],"path:",path,"file:",file);
-               createTS(arr[0],path,file);
-           }
-       });
+        var len = files.length;
+        for(var i = 0 ; i < len ; i++){
+            var file = files[i];
 
+
+            setTimeout(function(file){
+                console.log("file:",file);
+                var arr = file.split(".");
+                if( arr.length == 2 && arr[1] == skinsExtension ){
+                    // console.log("arr[0]:",arr[0],"path:",path,"file:",file);
+                    createTS(arr[0],path,file);
+                }
+            },200 * i,file);
+
+
+        }
     });
 }
 
@@ -96,6 +104,12 @@ function createTS(className,path,file){//className 对应渲染模版的ts.tmpl�
                     createFile(outputTSPath,className,valueVar,listenValue,funcValue);
                 });
             });
+        }else{
+            // console.log("write ts file success");
+
+            addToGameEvent(className);
+            // addToGameManage(className);
+            // addToGameResponse(className);
         }
     });
 }
@@ -130,7 +144,7 @@ function addToGameEvent(className){
             return;
         }
         var cn = className.replace("Skin","");
-        if( data.indexOf( "static " + cn + ":") != -1 ){
+        if( data.indexOf( "static " + cn.toUpperCase() + ":") != -1 ){
             return;
         }
 
