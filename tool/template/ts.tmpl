@@ -1,24 +1,22 @@
-class {{.className}} extends UIPanel{
-    {{.valueVar}}
-    constructor(){
+class {{.className}} extends UIPanel {
+	{{.valueVar}}
+    constructor() {
         super();
     }
-	
-	protected initView():void{
-	
-	}
 
-    protected configHandler():void{
-        {{.listenValue}}
+    protected initView(): void {
+        
     }
 
-    {{.funcValue}}
-
-    protected updateView():void{
+    protected configHandler(): void {
+		{{.listenValue}}
+    }
+	{{.funcValue}}	
+    protected updateView(): void {
 
     }
 
-    protected onRemove():void{
+    protected onRemove(): void {
 
     }
 }
