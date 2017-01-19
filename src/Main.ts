@@ -9,9 +9,15 @@ class Main extends eui.UILayer {
 
         HttpNet.Initialize();
         super.createChildren();
-        //var theme = new eui.Theme("resource/default.thm.json", this.stage);
-        RES.registerAnalyzer("exml", EXMLAnalyzer);
+        var theme: eui.Theme = new eui.Theme("resource/default.thm.json", this.stage);
+        // RES.registerAnalyzer("exml", EXMLAnalyzer);
         //RES.registerAnalyzer("xml",RES.XMLAnalyzer);
+        theme.addEventListener(egret.Event.COMPLETE, this.onThemeComplete, this);
+    }
+
+    private onThemeComplete(e: egret.Event): void {
+        var theme: eui.Theme = <eui.Theme>e.target;
+        theme.removeEventListener(egret.Event.COMPLETE, this.onThemeComplete, this);
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/default.res.json", "resource/");
     }

@@ -16,7 +16,12 @@ var Main = (function (_super) {
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
         HttpNet.Initialize();
         _super.prototype.createChildren.call(this);
-        RES.registerAnalyzer("exml", EXMLAnalyzer);
+        var theme = new eui.Theme("resource/default.thm.json", this.stage);
+        theme.addEventListener(egret.Event.COMPLETE, this.onThemeComplete, this);
+    };
+    Main.prototype.onThemeComplete = function (e) {
+        var theme = e.target;
+        theme.removeEventListener(egret.Event.COMPLETE, this.onThemeComplete, this);
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/default.res.json", "resource/");
     };
