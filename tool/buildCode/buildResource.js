@@ -33,18 +33,9 @@ function addFunc(dir) { //读取对应目录的文件
             return;
         }
 
-        // if (!addInfo.hasOwnProperty(dir)) {
-        //     addInfo[dir] = [];
-        //     var eName = dir + "." + skinsExtension;
-        //     var eUrl = skinsPath + eName;
-        //     eName = eName.replace(".", "_");
-        //     eUrl = eUrl.replace(resourceDir, "");
-        //     addInfo[dir].push({
-        //         name: eName,
-        //         type: "exml",
-        //         url: eUrl
-        //     })
-        // }
+        if (!addInfo.hasOwnProperty(dir)) {
+            addInfo[dir] = [];
+        }
 
         var lst = addInfo[dir];
 
