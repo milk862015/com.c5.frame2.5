@@ -1,25 +1,15 @@
 {
 	"groups":[
 		{
-			"keys":"LoadViewSkin_exml,load_min_num_fnt,black_jpg,LoadMinViewSkin_exml",
+			"keys":"load_min_num_fnt,black_jpg",
 			"name":"LoadViewSkin"
 		},
 		{
-			"keys":"AlertSkin_exml,alertBg_png",
+			"keys":"alertBg_png",
 			"name":"AlertSkin"
 		}
 	],
 	"resources":[
-		{
-			"name":"LoadViewSkin_exml",
-			"type":"exml",
-			"url":"skins/LoadViewSkin.exml"
-		},
-		{
-			"name":"LaunchSkin_exml",
-			"type":"exml",
-			"url":"skins/LaunchSkin.exml"
-		},
 		{
 			"name":"load_min_num_fnt",
 			"type":"font",
@@ -29,16 +19,6 @@
 			"name":"black_jpg",
 			"type":"image",
 			"url":"ui/black.jpg"
-		},
-		{
-			"name":"LoadMinViewSkin_exml",
-			"type":"exml",
-			"url":"skins/LoadMinViewSkin.exml"
-		},
-		{
-			"name":"AlertSkin_exml",
-			"type":"exml",
-			"url":"skins/AlertSkin.exml"
 		},
 		{
 			"name":"alertBg_png",
