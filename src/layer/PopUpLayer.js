@@ -1,100 +1,86 @@
-/**
- * Created by Administrator on 2015/9/28.
- */
-class PopUpLayer extends eui.Group {
-    static ModalAlpha: number = 0.8;
-
-    static ReadyClassFactory: any;
-    static ReadyAlpha: number;
-    static ReadyClassName: string;
-    static ReadyEffect: number;
-    static ReadyParams: any;
-
-    private pLst: PopUpUnit[];
-    constructor() {
-        super();
-        this.initialize();
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var PopUpLayer = (function (_super) {
+    __extends(PopUpLayer, _super);
+    function PopUpLayer() {
+        var _this = _super.call(this) || this;
+        _this.initialize();
+        return _this;
     }
-
-    private initialize(): void {
+    PopUpLayer.prototype.initialize = function () {
         this.pLst = [];
-    }
-
-    public AddPopUp(classFactory: any, effect?: number, alpha?: number, params?: any): any {
-        if (effect === void 0) { effect = 1 }
-        if (alpha == void 0) { alpha = PopUpLayer.ModalAlpha }
-
-        //检查是否存在相同类型的弹窗
-        var cName: string = egret.getQualifiedClassName(classFactory);
+    };
+    PopUpLayer.prototype.AddPopUp = function (classFactory, effect, alpha, params) {
+        if (effect === void 0) {
+            effect = 1;
+        }
+        if (alpha == void 0) {
+            alpha = PopUpLayer.ModalAlpha;
+        }
+        var cName = egret.getQualifiedClassName(classFactory);
         for (var i in this.pLst) {
-            var ta: any = this.pLst[i];
-            var taName: string = egret.getQualifiedClassName(ta.GetChild());
+            var ta = this.pLst[i];
+            var taName = egret.getQualifiedClassName(ta.GetChild());
             if (taName == cName) {
-                return false;//存在相同立刻退出
+                return false;
             }
         }
-
-        //检查资源是否加载了
-        var className: string = egret.getQualifiedClassName(classFactory);
+        var className = egret.getQualifiedClassName(classFactory);
         if (typeof className != "string") {
             return false;
         }
-
         if (RES.getGroupByName(className).length > 0 && RES.isGroupLoaded(className) == false) {
             PopUpLayer.ReadyClassName = className;
             PopUpLayer.ReadyParams = params;
             gr.addEventListener(GameEvent.LOAD_COMPETE, this.onLoadCompleteHandler, this);
             gr.addEventListener(GameEvent.LOAD_PROGRESS, this.onProgressHandler, this);
-
             PopUpLayer.ReadyClassFactory = classFactory;
             PopUpLayer.ReadyAlpha = alpha;
             PopUpLayer.ReadyEffect = effect;
-
             LoadManage.StartLoad([className], null);
             Core.LoadLayer.ShowMinLoading();
-            return false
-        } else {
+            return false;
+        }
+        else {
             this.startClear();
             return this.showPopUp(classFactory, effect, alpha, params);
         }
-    }
-
-    private onLoadCompleteHandler(e: GameEvent): void {
+    };
+    PopUpLayer.prototype.onLoadCompleteHandler = function (e) {
         this.startClear();
-    }
-
-    private onProgressHandler(e: GameEvent): void {
-        var data: any = e.data;
+    };
+    PopUpLayer.prototype.onProgressHandler = function (e) {
+        var data = e.data;
         if (data["groupName"] != void 0 && data["groupName"] == PopUpLayer.ReadyClassName) {
             this.startClear();
         }
-    }
-
-    private startClear(): void {
+    };
+    PopUpLayer.prototype.startClear = function () {
         gr.removeEventListener(GameEvent.LOAD_COMPETE, this.onLoadCompleteHandler, this);
         gr.removeEventListener(GameEvent.LOAD_PROGRESS, this.onProgressHandler, this);
-        egret.Tween.get(this).wait(200).call(this.startShow, this)
-    }
-
-    private startShow(): void {
+        egret.Tween.get(this).wait(200).call(this.startShow, this);
+    };
+    PopUpLayer.prototype.startShow = function () {
         if (PopUpLayer.ReadyClassFactory) {
             this.showPopUp(PopUpLayer.ReadyClassFactory, PopUpLayer.ReadyEffect, PopUpLayer.ReadyAlpha, PopUpLayer.ReadyParams);
         }
         Core.LoadLayer.CloseMinLoading();
-
         PopUpLayer.ReadyClassFactory = null;
         PopUpLayer.ReadyEffect = 0;
         PopUpLayer.ReadyAlpha = 0;
         PopUpLayer.ReadyClassName = null;
         PopUpLayer.ReadyParams = null;
-    }
-
-    private showPopUp(classFactory: any, effect: number, alpha: number, params?: any): PopUpUnit {
-        var pu: PopUpUnit = new PopUpUnit(alpha);
-        var target: any;
+    };
+    PopUpLayer.prototype.showPopUp = function (classFactory, effect, alpha, params) {
+        var pu = new PopUpUnit(alpha);
+        var target;
         if (params == void 0) {
             target = new classFactory();
-        } else {
+        }
+        else {
             target = new classFactory(params);
         }
         target["anchorOffsetX"] = Core.Stage.stageWidth * 0.5;
@@ -108,16 +94,18 @@ class PopUpLayer extends eui.Group {
             target["scaleX"] = 0;
             target["scaleY"] = 0;
             egret.Tween.get(target).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backOut).call(gr.EffectEnd, gr);
-        } else {
+        }
+        else {
             gr.EffectEnd();
         }
         return pu;
-    }
-
-    public RemovePopUp(target: egret.DisplayObject, effect?: boolean): void {
-        if (effect === void 0) { effect = true }
-        var pa: PopUpUnit;
-        var index: number = -1;
+    };
+    PopUpLayer.prototype.RemovePopUp = function (target, effect) {
+        if (effect === void 0) {
+            effect = true;
+        }
+        var pa;
+        var index = -1;
         for (var i in this.pLst) {
             if (target.parent == this.pLst[i]) {
                 index = parseInt(i);
@@ -129,22 +117,23 @@ class PopUpLayer extends eui.Group {
             this.pLst.splice(index, 1);
             if (effect) {
                 egret.Tween.get(target).to({ scaleX: 0, scaleY: 0 }, 300).call(this.removeTarget, this, [pa]);
-            } else {
+            }
+            else {
                 this.removeTarget(pa);
             }
         }
-    }
-
-    private removeTarget(pa: PopUpUnit): void {
+    };
+    PopUpLayer.prototype.removeTarget = function (pa) {
         if (pa.parent) {
             pa.parent.removeChild(pa);
         }
-    }
-
-    public CloseAll(): void {
+    };
+    PopUpLayer.prototype.CloseAll = function () {
         while (this.pLst.length > 0) {
-            var pa: PopUpUnit = this.pLst.pop();
+            var pa = this.pLst.pop();
             this.removeTarget(pa);
         }
-    }
-}
+    };
+    return PopUpLayer;
+}(eui.Group));
+PopUpLayer.ModalAlpha = 0.8;
