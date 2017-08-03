@@ -19,17 +19,17 @@ function alertDialog () {
 	dialog.savePNGs.value = savePNGs;
 	dialog.savePNGs.alignment = "left";
 
-	dialog.saveHTML = dialog.add("checkbox", undefined, "Export HTML");
-	dialog.saveHTML.alignment = "left";
-	dialog.saveHTML.value = saveHTML;
+	// dialog.saveHTML = dialog.add("checkbox", undefined, "Export HTML");
+	// dialog.saveHTML.alignment = "left";
+	// dialog.saveHTML.value = saveHTML;
 
 	dialog.ignoreHiddenLayers = dialog.add("checkbox", undefined, "Ignore Hidden Layers");
 	dialog.ignoreHiddenLayers.alignment = "left";
 	dialog.ignoreHiddenLayers.value = ignoreHiddenLayers;
 
-	dialog.useHorizontalCenterAndTop = dialog.add("checkbox", undefined, "Use HorizontalCenterAndTop")
-	dialog.useHorizontalCenterAndTop.alignment = "left";
-	dialog.useHorizontalCenterAndTop.value = useHorizontalCenterAndTop;
+	// dialog.useHorizontalCenterAndTop = dialog.add("checkbox", undefined, "Use HorizontalCenterAndTop")
+	// dialog.useHorizontalCenterAndTop.alignment = "left";
+	// dialog.useHorizontalCenterAndTop.value = useHorizontalCenterAndTop;
 
 
 	var scaleGroup = dialog.add("panel", [0, 0, 180, 50], "Image Scale");
@@ -52,9 +52,9 @@ function alertDialog () {
 
     okButton.onClick = function() {
 		savePNGs = dialog.savePNGs.value;
-		saveHTML = dialog.saveHTML.value;
+		// saveHTML = dialog.saveHTML.value;
 		ignoreHiddenLayers = dialog.ignoreHiddenLayers.value;
-		useHorizontalCenterAndTop = dialog.useHorizontalCenterAndTop.value;
+		// useHorizontalCenterAndTop = dialog.useHorizontalCenterAndTop.value;
 		scaleImage = scaleSlider.value / 100;
 		init();
 		this.parent.close(0);
