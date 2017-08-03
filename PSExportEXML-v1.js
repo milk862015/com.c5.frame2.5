@@ -114,7 +114,8 @@ function init () {
 		var layer = layers[i];
 		layerVisibility[layer] = getLayerVisible(layer);
 		layer.visible = false;
-         newName = checkLayerName(trim(layer.name),layerName)
+         //newName = checkLayerName(trim(layer.name),layerName)
+         newName = checkLayerName(name.toLowerCase() + "_" + i +"_png" ,layerName)
          layerName[i]  = newName;
 	}
 
