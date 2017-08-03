@@ -120,7 +120,9 @@ function init () {
 		var layer = layers[i];
 		layerVisibility[layer] = getLayerVisible(layer);
 		layer.visible = false;
-         newName = checkLayerName(trim(layer.name),layerName)
+         //newName = checkLayerName(trim(layer.name),layerName)
+         var newName = changeUpserName(name);
+         newName = checkLayerName(newName.toLowerCase() + "_" + i +"_png" ,layerName)
          layerName[i]  = newName;
 	}
 
@@ -132,24 +134,24 @@ function init () {
 
 			if (ignoreHiddenLayers && !layerVisibility[layer]) continue;
 			//屏幕坐标系是左上角的
-			var x = app.activeDocument.width.as("px") * scaleImage *0.5;
+			var x = app.activeDocument.width.as("px") * scaleImage ;
 			layer.visible = true;
 			if (!layer.isBackgroundLayer)
 				app.activeDocument.trim(TrimType.TRANSPARENT, false, true, true, false);
-            x -= app.activeDocument.width.as("px") * scaleImage*0.5;
-            var y = app.activeDocument.height.as("px") * scaleImage*0.5;
+            x -= app.activeDocument.width.as("px") * scaleImage;
+            var y = app.activeDocument.height.as("px") * scaleImage;
 			if (!layer.isBackgroundLayer)
 				app.activeDocument.trim(TrimType.TRANSPARENT, true, false, false, true);
-			var width = app.activeDocument.width.as("px") * scaleImage * 0.5;
-			var height = app.activeDocument.height.as("px") * scaleImage * 0.5;
+			var width = app.activeDocument.width.as("px") * scaleImage ;
+			var height = app.activeDocument.height.as("px") * scaleImage ;
 			y -= height;
 			// Save image.
             var ln = layerName[i].replace("_png",".png");
             ln = ln.replace("_jpg",".jpg");
-            var remW = (width/fontSize).toFixed(2) + "rem";
-            var remH = (height/fontSize).toFixed(2) + "rem";
-            var remX = (x/fontSize).toFixed(2) + "rem";
-            var remY = (y/fontSize).toFixed(2) + "rem";
+            var remW = width + "px";
+            var remH = height + "px";
+            var remX = x + "px";
+            var remY = x + "px";
 			if (savePNGs && ( ln.indexOf(".png") != -1 || ln.indexOf(".jpg") != -1 )) {
                   	if (scaleImage != 1) scaleImages();
                   	var file;
@@ -266,4 +268,22 @@ function hasFilePath() {
 	var reference = new ActionReference();
 	reference.putEnumerated( charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );
 	return executeActionGet(reference).hasKey(stringIDToTypeID('fileReference'));
+}
+
+function changeUpserName(v){
+	var len = v.length;
+	var nv = "";
+	for(var i =0; i< len; i++){
+		var key = v.charAt(i);
+		if( /[A-Z]/.test(key) ){
+			if( i != 0 ){
+				nv = nv + "_" + key;
+			}else{
+				nv = nv + key;
+			}
+		}else{
+			nv = nv + key;
+		}
+	}
+	return nv.toLowerCase();
 }

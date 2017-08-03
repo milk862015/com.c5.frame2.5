@@ -114,8 +114,8 @@ function init () {
 		var layer = layers[i];
 		layerVisibility[layer] = getLayerVisible(layer);
 		layer.visible = false;
-         //newName = checkLayerName(trim(layer.name),layerName)
-         newName = checkLayerName(name.toLowerCase() + "_" + i +"_png" ,layerName)
+         var newName = changeUpserName(name);
+         newName = checkLayerName(newName.toLowerCase() + "_" + i +"_png" ,layerName)
          layerName[i]  = newName;
 	}
 
@@ -263,4 +263,22 @@ function hasFilePath() {
 	var reference = new ActionReference();
 	reference.putEnumerated( charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );
 	return executeActionGet(reference).hasKey(stringIDToTypeID('fileReference'));
+}
+
+function changeUpserName(v){
+	var len = v.length;
+	var nv = "";
+	for(var i =0; i< len; i++){
+		var key = v.charAt(i);
+		if( /[A-Z]/.test(key) ){
+			if( i != 0 ){
+				nv = nv + "_" + key;
+			}else{
+				nv = nv + key;
+			}
+		}else{
+			nv = nv + key;
+		}
+	}
+	return nv.toLowerCase();
 }
