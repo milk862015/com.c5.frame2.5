@@ -91,15 +91,17 @@ function init () {
     var name = decodeURI(app.activeDocument.name);//文件名字
 	name = name.substring(0, name.indexOf("."));
 
-	var dir = app.activeDocument.path + "/../resource/";
+	var dir = app.activeDocument.path + "/../src/";
 
-	var res_ui = dir + "ui/";
-    var skinDir = dir + "html/";
-    var cssDir = dir + "css/";
+	var res_ui = dir + "assets/";
+	var vueDir =  dir +"components/"
+    // var skinDir = dir + "html/";
+    // var cssDir = dir + "css/";
 
     new Folder(dir).create();
-    new Folder(skinDir).create();
-    new Folder(cssDir).create();
+    new Folder(vueDir).create();
+    // new Folder(skinDir).create();
+    // new Folder(cssDir).create();
 
     if(savePNGs){
     	new Folder(res_ui).create();
@@ -127,7 +129,8 @@ function init () {
 	}
 
 	if (saveHTML || savePNGs) {
-		var html = "<html>\n</body>";
+		var vueContent = "";
+		var html = '<template>\n  <div class="'+ name +'" >\n';
 		var cssContent = "";	
 		for (var i = layerCount - 1; i >= 0; i--) {
 			var layer = layers[i];
@@ -191,29 +194,25 @@ function init () {
                 //}
 			}
 			layer.visible = false;
-			html += '	<img id=\"' + layerName[i] +  '\" class="'+ layerName[i]  + '" src=\"resource/ui/'+ name + "/" + ln  +'\">\n'
+			html += '		<img  class="'+ layerName[i]  + '" src=\"../assets/'+ name + "/" + ln  +'\">\n'
 			cssContent += 	'.' + layerName[i] +'{\n' + "		position:absolute;\n" + 
 							"		width:" + remW + ";\n		height:" + remH + ";\n		left:" + remX + 
 							";\n		top:" + remY  + ';\n}\n'
 		}
 
 
-		html += "</body>\n</html>"
+		html += "	</div>\n</template>"
 		if (saveHTML) {
-			var file = new File(skinDir + name + ".html");
+			vueContent += html;
+			vueContent += "<script>\nexport default {\n  name: '"+ name +"'\n}\n</script>\n"
+			vueContent += "<style>\n" + cssContent + "\n</style>"
+
+			var file = new File(vueDir + name + ".vue");
 			file.remove();
 			file.open("a");
 			file.lineFeed = "\n";
             file.encoding="utf-8";
-			file.write(html);
-			file.close();
-
-			file = new File(cssDir + name + ".css")
-			file.remove();
-			file.open("a");
-			file.lineFeed = "\n"
-			file.encoding = "utf-8"
-			file.write(cssContent)
+			file.write(vueContent);
 			file.close();
 		}
 	}
