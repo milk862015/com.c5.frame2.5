@@ -54,7 +54,8 @@ module DragonBonesManage {
       var textureData = RES.getRes(key + "_tex_json");
       var texture = RES.getRes(key + "_tex_png");
       this.dragonBonesFactory.parseDragonBonesData(dragonBonesData);
-      this.dragonBonesFactory.addTextureAtlasData(new dragonBones.EgretTextureAtlas(texture, textureData));
+      this.dragonBonesFactory.parseTextureAtlasData(textureData, texture);
+      // this.dragonBonesFactory.parseTextureAtlasData(new dragonBones.EgretTextureAtlas(texture, textureData));
       this.lst.push(key);
     }
 
