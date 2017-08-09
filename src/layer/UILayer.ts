@@ -2,141 +2,149 @@
  * Created by Administrator on 2015/9/28.
  */
 class UILayer extends eui.Group {
-    static CHANGE_TIME: number = 500;//单位:毫秒
+  static CHANGE_TIME: number = 500;//单位:毫秒
 
-    private curShow: egret.DisplayObjectContainer;
-    private lastShow: egret.DisplayObjectContainer;
+  private curShow: egret.DisplayObjectContainer;
+  private lastShow: egret.DisplayObjectContainer;
 
-    private loadView: any;
+  private loadView: any;
 
-    static ReadyClassFactory: any;
-    static ReadyMode: number;
-    static ReadyClassName: string;
-    static ReadyParams: any;
+  static ReadyClassFactory: any;
+  static ReadyMode: number;
+  static ReadyClassName: string;
+  static ReadyParams: any;
 
-    private curClass: any;
-    constructor() {
-        super();
-        this.initialize();
+  private curClass: any;
+  constructor() {
+    super();
+    this.initialize();
+  }
+
+  private initialize(): void {
+    Core.Stage.addEventListener(egret.Event.RESIZE, this.onReSizeHandler, this);
+  }
+
+  private onReSizeHandler(e: egret.Event): void {
+    if (this.curShow) {
+      this.curShow.width = Core.Stage.stageWidth;
+      this.curShow.height = Core.Stage.stageHeight;
+    }
+  }
+
+  public SetLoadView(value: any): void {
+    this.loadView = value;
+  }
+
+
+  public Show(classFactory: any, mode?: number, params?: any): void {
+    if (mode === void 0) { mode = 1 }
+    if (this.curClass == classFactory) {
+      return;
     }
 
-    private initialize(): void {
+    //检查资源是否加载了
+    var className: string = egret.getQualifiedClassName(classFactory);
+    if (typeof className != "string") {
+      return;
     }
 
-    public SetLoadView(value: any): void {
-        this.loadView = value;
+    if (RES.getGroupByName(className).length > 0 && RES.isGroupLoaded(className) == false) {
+      gr.addEventListener(GameEvent.LOAD_COMPETE, this.onUILoadCompleteHandler, this);
+      gr.addEventListener(GameEvent.LOAD_GROUP_COMPLETE, this.onUILoadGroupCompleteHandler, this);
+      UILayer.ReadyClassFactory = classFactory;
+      UILayer.ReadyMode = mode;
+      UILayer.ReadyClassName = className;
+      UILayer.ReadyParams = params;
+      LoadManage.StartLoad([className], null);
+      Core.LoadLayer.ShowMinLoading();
+    } else {
+      this.startClear();
+      this.startShow(classFactory, mode, params);
+    }
+  }
+
+  private onUILoadGroupCompleteHandler(e: GameEvent): void {
+    var groupName: string = <string>e.data;
+    if (groupName != void 0 && groupName == UILayer.ReadyClassName) {
+      this.startClear();
+    }
+  }
+
+  private onUILoadCompleteHandler(e: GameEvent): void {
+    this.startClear();
+  }
+
+  private startClear(): void {
+    if (UILayer.ReadyClassFactory) {
+      this.startShow(UILayer.ReadyClassFactory, UILayer.ReadyMode, UILayer.ReadyParams);
     }
 
+    Core.LoadLayer.CloseMinLoading();
+    gr.removeEventListener(GameEvent.LOAD_GROUP_COMPLETE, this.onUILoadGroupCompleteHandler, this);
+    gr.removeEventListener(GameEvent.LOAD_COMPETE, this.onUILoadCompleteHandler, this);
+    UILayer.ReadyClassFactory = null;
+    UILayer.ReadyMode = null;
+    UILayer.ReadyClassName = null;
+    UILayer.ReadyParams = null;
+  }
 
-    public Show(classFactory: any, mode?: number, params?: any): void {
-        if (mode === void 0) { mode = 1 }
-        if (this.curClass == classFactory) {
-            return;
-        }
 
-        //检查资源是否加载了
-        var className: string = egret.getQualifiedClassName(classFactory);
-        if (typeof className != "string") {
-            return;
-        }
-
-        if (RES.getGroupByName(className).length > 0 && RES.isGroupLoaded(className) == false) {
-            gr.addEventListener(GameEvent.LOAD_COMPETE, this.onUILoadCompleteHandler, this);
-            gr.addEventListener(GameEvent.LOAD_GROUP_COMPLETE, this.onUILoadGroupCompleteHandler, this);
-            UILayer.ReadyClassFactory = classFactory;
-            UILayer.ReadyMode = mode;
-            UILayer.ReadyClassName = className;
-            UILayer.ReadyParams = params;
-            LoadManage.StartLoad([className], null);
-            Core.LoadLayer.ShowMinLoading();
-        } else {
-            this.startClear();
-            this.startShow(classFactory, mode, params);
-        }
+  private startShow(classFactory: any, mode: number, params?: any): void {
+    if (this.curShow) {
+      this.lastShow = this.curShow;
+    }
+    this.curClass = classFactory;
+    if (classFactory != null) {
+      if (params == void 0) {
+        this.curShow = new classFactory();
+      } else {
+        this.curShow = new classFactory(params);
+      }
     }
 
-    private onUILoadGroupCompleteHandler(e: GameEvent): void {
-        var groupName: string = <string>e.data;
-        if (groupName != void 0 && groupName == UILayer.ReadyClassName) {
-            this.startClear();
-        }
+    this.onReSizeHandler(null);
+    if (this.curShow) {//判断加载在哪层
+      switch (mode) {
+        case 0:
+        case 1:
+        case 2:
+          this.addChild(this.curShow);
+          break;
+        case 3:
+          this.addChildAt(this.curShow, this.numChildren - 1);
+          break;
+      }
     }
 
-    private onUILoadCompleteHandler(e: GameEvent): void {
-        this.startClear();
+    if (this.lastShow) {
+      switch (mode) {
+        case 1:
+          this.curShow.alpha = 0;
+          egret.Tween.get(this.curShow).to({ alpha: 1 }, UILayer.CHANGE_TIME).call(this.Close, this).call(gr.EffectEnd, gr);
+          egret.Tween.get(this.lastShow).to({ alpha: 0 }, UILayer.CHANGE_TIME);
+          break;
+        case 2:
+          this.curShow.y = Core.Stage.height;
+          egret.Tween.get(this.curShow).to({ y: 0 }, UILayer.CHANGE_TIME).call(this.Close, this).call(gr.EffectEnd, gr);
+          break;
+        case 3:
+          egret.Tween.get(this.lastShow).to({ y: Core.Stage.height }, UILayer.CHANGE_TIME).call(this.Close, this).call(gr.EffectEnd, gr);
+          break;
+        default:
+          this.Close();
+          gr.EffectEnd();
+          break;
+      }
+    } else {
+      this.Close();
+      gr.EffectEnd();
     }
+  }
 
-    private startClear(): void {
-        if (UILayer.ReadyClassFactory) {
-            this.startShow(UILayer.ReadyClassFactory, UILayer.ReadyMode, UILayer.ReadyParams);
-        }
-
-        Core.LoadLayer.CloseMinLoading();
-        gr.removeEventListener(GameEvent.LOAD_GROUP_COMPLETE, this.onUILoadGroupCompleteHandler, this);
-        gr.removeEventListener(GameEvent.LOAD_COMPETE, this.onUILoadCompleteHandler, this);
-        UILayer.ReadyClassFactory = null;
-        UILayer.ReadyMode = null;
-        UILayer.ReadyClassName = null;
-        UILayer.ReadyParams = null;
+  private Close(): void {
+    if (this.lastShow && this.lastShow.parent) {
+      this.lastShow.parent.removeChild(this.lastShow);
+      this.lastShow = null;
     }
-
-
-    private startShow(classFactory: any, mode: number, params?: any): void {
-        if (this.curShow) {
-            this.lastShow = this.curShow;
-        }
-        this.curClass = classFactory;
-        if (classFactory != null) {
-            if (params == void 0) {
-                this.curShow = new classFactory();
-            } else {
-                this.curShow = new classFactory(params);
-            }
-        }
-
-
-        if (this.curShow) {//判断加载在哪层
-            switch (mode) {
-                case 0:
-                case 1:
-                case 2:
-                    this.addChild(this.curShow);
-                    break;
-                case 3:
-                    this.addChildAt(this.curShow, this.numChildren - 1);
-                    break;
-            }
-        }
-
-        if (this.lastShow) {
-            switch (mode) {
-                case 1:
-                    this.curShow.alpha = 0;
-                    egret.Tween.get(this.curShow).to({ alpha: 1 }, UILayer.CHANGE_TIME).call(this.Close, this).call(gr.EffectEnd, gr);
-                    egret.Tween.get(this.lastShow).to({ alpha: 0 }, UILayer.CHANGE_TIME);
-                    break;
-                case 2:
-                    this.curShow.y = Core.Stage.height;
-                    egret.Tween.get(this.curShow).to({ y: 0 }, UILayer.CHANGE_TIME).call(this.Close, this).call(gr.EffectEnd, gr);
-                    break;
-                case 3:
-                    egret.Tween.get(this.lastShow).to({ y: Core.Stage.height }, UILayer.CHANGE_TIME).call(this.Close, this).call(gr.EffectEnd, gr);
-                    break;
-                default:
-                    this.Close();
-                    gr.EffectEnd();
-                    break;
-            }
-        } else {
-            this.Close();
-            gr.EffectEnd();
-        }
-    }
-
-    private Close(): void {
-        if (this.lastShow && this.lastShow.parent) {
-            this.lastShow.parent.removeChild(this.lastShow);
-            this.lastShow = null;
-        }
-    }
+  }
 }
