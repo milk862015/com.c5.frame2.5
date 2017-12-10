@@ -89,7 +89,7 @@ class UILayer extends eui.Group {
   }
 
 
-  private startShow(classFactory: any, mode: number, params?: any): void {
+  private startShow(classFactory: any, mode: number, params?: any[]): void {
     if (this.curShow) {
       this.lastShow = this.curShow;
     }
@@ -98,7 +98,7 @@ class UILayer extends eui.Group {
       if (params == void 0) {
         this.curShow = new classFactory();
       } else {
-        this.curShow = new classFactory(params);
+        this.curShow = new classFactory(...params);
       }
     }
 

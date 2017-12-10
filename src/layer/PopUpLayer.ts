@@ -89,13 +89,13 @@ class PopUpLayer extends eui.Group {
     PopUpLayer.ReadyParams = null;
   }
 
-  private showPopUp(classFactory: any, effect: number, alpha: number, params?: any): PopUpUnit {
+  private showPopUp(classFactory: any, effect: number, alpha: number, params?: any[]): PopUpUnit {
     var pu: PopUpUnit = new PopUpUnit(alpha);
     var target: any;
     if (params == void 0) {
       target = new classFactory();
     } else {
-      target = new classFactory(params);
+      target = new classFactory(...params);
     }
     target["anchorOffsetX"] = Core.Stage.stageWidth * 0.5;
     target["anchorOffsetY"] = Core.Stage.stageHeight * 0.5;

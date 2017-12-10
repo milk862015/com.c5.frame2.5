@@ -53,8 +53,8 @@ module gr {
             super();
         }
 
-        public sendEvent(key: string, data?: any): void {
-            var ge: GameEvent = new GameEvent(key, false, false, data);
+        public sendEvent(key: string, ...args): void {
+            var ge: GameEvent = new GameEvent(key, false, false, args);
             this.dispatchEvent(ge);
         }
     }
